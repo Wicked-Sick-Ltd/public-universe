@@ -1,0 +1,21 @@
+{
+  "name": "solar",
+  "version": "0.1.0",
+  "description": "Explore the Solar System with live NASA/JPL data from Solar (sol.wickedsick.com): what's up tonight, lesson plans by key stage, fact-checking, object explainers, close-approach watch, weekly sky content and data-quality audits.",
+  "author": {
+    "name": "Craig Fletcher",
+    "email": "hello@wickedsick.com"
+  },
+  "homepage": "https://sol.wickedsick.com",
+  "repository": "https://github.com/Wicked-Sick-Ltd/solar-plugin",
+  "license": "MIT",
+  "keywords": [
+    "astronomy",
+    "solar-system",
+    "education",
+    "nasa",
+    "jpl",
+    "stargazing",
+    "mcp"
+  ]
+}
