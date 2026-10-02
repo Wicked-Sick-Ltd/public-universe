@@ -5,12 +5,16 @@ description: >
   "Year 5 Earth and space lesson", "KS3 gravity activity", "GCSE space physics starter", "A-level Kepler practical",
   "STEM club activity using real NASA data", or wants any classroom activity built from live Solar data for a UK key stage.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Lesson builder
 
 Create a ready-to-teach lesson or activity that uses **real values pulled live from Solar**, pitched for the right UK key stage.
+
+## Client compatibility
+
+Use the connected Solar MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## 1. Clarify (ask only for what's missing)
 - Key stage or year group: KS1, LKS2, UKS2, KS3, KS4/GCSE, KS5/A-level, or a club.

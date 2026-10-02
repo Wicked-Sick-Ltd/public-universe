@@ -1,7 +1,7 @@
 {
   "name": "solar",
-  "version": "0.1.0",
-  "description": "Explore the Solar System with live NASA/JPL data from Solar (sol.wickedsick.com): what's up tonight, lesson plans by key stage, fact-checking, object explainers, close-approach watch, weekly sky content and data-quality audits.",
+  "version": "0.2.0",
+  "description": "Public Universe astronomy tools and skills: explore live catalogue data, plan an evening of stargazing, explain objects, build lessons and check space facts using the public Solar MCP server.",
   "author": {
     "name": "Wicked Sick Ltd",
     "email": "hello@wickedsick.com",
@@ -17,6 +17,8 @@
     "nasa",
     "jpl",
     "stargazing",
-    "mcp"
+    "mcp",
+    "public-universe",
+    "agent-skills"
   ]
 }
