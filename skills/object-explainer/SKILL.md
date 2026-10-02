@@ -5,12 +5,16 @@ description: >
   "what is 2022 UP6", "make a fact card for Ceres", "describe Neptune for my class", or wants any planet, moon,
   comet, asteroid, dwarf planet or meteor shower explained at a chosen reading level using live Solar data.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Object explainer
 
 Turn any catalogue object into a clear explanation or fact card at the right level.
+
+## Client compatibility
+
+Use the connected Solar MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## Steps
 1. **Find it.** Use `search(query)` if the name is ambiguous (e.g. "Halley" matches a comet and an asteroid). Ask which one if it's still unclear. For showers, use `get_meteor_shower`.

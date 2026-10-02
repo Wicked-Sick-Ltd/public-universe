@@ -5,12 +5,16 @@ description: >
   "is this right about Saturn's moons", "verify the numbers in my worksheet/brochure/post",
   "check what the AI said about the planets", or pastes astronomy claims to verify against live Solar data.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Space fact-check
 
 Verify astronomy claims against Solar's live catalogue, and explain any legitimate reasons a number might differ.
+
+## Client compatibility
+
+Use the connected Solar MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## Steps
 1. **Extract claims.** List every checkable claim from the text or file: numbers, comparisons, dates, "biggest/fastest/only" statements and positions ("Saturn is up all night in October").

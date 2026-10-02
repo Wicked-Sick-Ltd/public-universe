@@ -5,12 +5,16 @@ description: >
   "run a data quality check", "why does Saturn show 316 moons", "sanity-check last night's build",
   or wants the solar-system-db catalogue compared against official figures with fixes proposed.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Solar data audit
 
 Check Solar's catalogue for errors, drift from official sources and presentation traps. Report findings with evidence and proposed fixes.
+
+## Client compatibility
+
+Use the connected Solar MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## 1. Build snapshot
 `get_stats` and `get_sources` give the build time, row counts and source timestamps. `get_download_info` gives the artefact date, schema version and sha256. Flag a build older than 36 hours, or a schema version behind what the website expects (exoplanets need v4).

@@ -1,36 +1,67 @@
-# Solar plugin
+# Public Universe · Solar plugin
 
-Live Solar System data from **Solar** (https://sol.wickedsick.com), a free catalogue of more than 1.5 million objects built nightly from NASA/JPL and IAU Minor Planet Center data. The plugin connects Claude to Solar's public MCP server and adds skills for teachers, stargazers, content writers and the Solar team.
+Astronomy tools and seven reusable workflows for **ChatGPT, Codex, Cursor, GitHub Copilot and Claude**. Explore catalogue data from NASA/JPL and other astronomical organisations, prepare lessons, explain objects and plan an evening of stargazing.
+
+The stable package name is **`solar`**. Public Universe is the project name; the existing service URLs remain in place during the domain migration.
+
+## Choose your client
+
+| Client | Installation |
+| --- | --- |
+| ChatGPT | [Connect the public MCP server; add packaged skills where supported](docs/openai.md#chatgpt) |
+| Codex CLI, desktop and IDE | [Portable plugin or MCP plus local skills](docs/openai.md#codex) |
+| Cursor | [Local portable plugin](docs/clients.md#cursor-full-plugin) |
+| GitHub Copilot CLI | [Local portable plugin](docs/clients.md#github-copilot-cli-full-plugin) |
+| GitHub Copilot in VS Code | [Local portable plugin](docs/clients.md#github-copilot-in-vs-code-full-plugin) |
+| Claude Code | [Existing Claude plugin format](docs/clients.md#claude-code-existing-plugin-compatibility) |
+| Other MCP clients | Add the HTTPS endpoint below using the client's Streamable HTTP setup. Skills need separate Agent Skills support. |
+
+The root `plugin.json`, `mcp.json` and `skills/` use the [portable Agent Plugins format](https://agent-plugins.org/). Claude compatibility files are also included. A tools-only MCP connection does **not** install the skills. Client version, account and organisation policies affect availability; this is not a claim of public marketplace approval.
+
+Clone this repository into a new directory, or extract the built archive. While reviewing the development PR, use its `codex/multi-vendor-plugin` branch; `main` gains these files only after merge. Follow the guide for your client and preserve any existing configuration.
 
 ## Connection
-`.mcp.json` registers the public MCP server:
 
-- `solar-system-db`, streamable HTTP at `https://api.sol.wickedsick.com/mcp`. No authentication is needed.
+- Server name: `solar-system-db`
+- Transport: **Streamable HTTP**
+- URL: **`https://api.sol.wickedsick.com/mcp`**
+- Authentication: the intended public service requires no API key.
 
-The server exposes 28 read-only tools, including `get_object`, `list_moons`, `search`, `get_sky_position`, `compute_position`, `find_close_approaches`, `list_meteor_showers`, `next_perihelion` and `get_stats`.
+**Live acceptance pending:** this URL returned HTTP 404 to an MCP initialization request on 2026-10-02. Installing the package cannot repair a missing server route. See the [validation record](docs/validation.md) for the current evidence and remaining checks.
+
+Discover available tools from the connected server rather than relying on a fixed tool count. Existing workflows use catalogue lookup, sky positions, meteor showers, close approaches and source metadata. Deployment determines which newer catalogue and observing tools are available.
 
 ## Skills
+
 | Skill | Use it for |
-|---|---|
-| **tonight-sky** | "What can I see tonight from Romsey?": planets up, directions, heights and times in local time |
-| **lesson-builder** | Lessons and worksheets from KS1 to A-level with live values, curriculum links and answers |
-| **space-fact-check** | Check a worksheet, brochure, post or AI answer against the catalogue, with safer wording |
-| **object-explainer** | Explain any planet, moon, comet, asteroid or shower for a child, teen or adult, with a fact card |
-| **close-approach-watch** | Upcoming asteroid flybys in plain English, with sizes, lunar distances and a calm tone |
-| **sky-this-week** | Blog, newsletter and social copy with SEO metadata that links back to Solar pages |
-| **solar-data-audit** | For the Solar team: catalogue QA against official figures, with fixes and verify checks |
+| --- | --- |
+| `tonight-sky` | A viewing plan for a place and evening |
+| `lesson-builder` | UK key-stage lessons and worksheets using live values |
+| `space-fact-check` | Check astronomy claims and explain definition differences |
+| `object-explainer` | Explain catalogue objects at a chosen reading level |
+| `close-approach-watch` | Explain upcoming asteroid and comet flybys |
+| `sky-this-week` | Draft a sourced sky roundup or social copy |
+| `solar-data-audit` | Compare catalogue data with official sources |
 
-Each skill carries `references/data-caveats.md`, which lists the known definition traps (moon counts, GM/R² gravity, Venus's two kinds of day, two-body accuracy, UTC).
+Every skill includes its own reference files, so it can be installed independently. The same source skills are used by every client. Workflow instructions distinguish unavailable tools from verified results.
 
-## Notes
-- Solar is astronomy, not astrology.
-- Positions are accurate to about 1°. That's fine for "is it up and where", but not for telescope pointing.
-- Data licences: NASA/JPL data is public domain. IAU MPC data needs the credit "Data: IAU Minor Planet Center".
-- Built by Wicked Sick Ltd. Feedback and feature ideas: hello@wickedsick.com
+## Develop and package
 
-## Install
-From the Wicked Sick marketplace (`Wicked-Sick-Ltd/ai-marketplace`), install **solar**. Or install the `.plugin` file built from this repo:
+Python 3.11 or newer is sufficient; packaging has no third-party dependencies.
 
-```bash
-zip -r solar.plugin . -x ".git/*" "*.plugin"
+```sh
+python3 scripts/package.py generate
+python3 scripts/package.py check
+python3 -m unittest discover -s tests -v
+python3 scripts/package.py build
 ```
+
+Edit root `plugin.json` for package metadata and root `mcp.json` for the connection. Regenerate the Claude compatibility files and standalone client profiles, then commit those generated files with the source change. `check` rejects drift. The build includes an explicit set of package files and excludes repository history and unrelated local files. See [validation and client acceptance](docs/validation.md).
+
+## Data and observing
+
+This is astronomy, not astrology. Keep the source, retrieval date, units, calculation method and limitations with derived answers. These workflows do not control telescopes or certify pointing accuracy. Never look at the Sun through binoculars or a telescope without specialist solar observing equipment and appropriate supervision.
+
+The plugin code is MIT licensed; source datasets retain their own terms and attribution requirements. Consult the catalogue's source records, including credit to the IAU Minor Planet Center where applicable.
+
+Built by Wicked Sick Ltd. Feedback: hello@wickedsick.com.
