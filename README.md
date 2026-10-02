@@ -47,7 +47,7 @@ Every skill includes its own reference files, so it can be installed independent
 
 ## Develop and package
 
-Python 3.11 or newer is sufficient; packaging has no third-party dependencies.
+Run these commands from a source checkout with Python 3.11 or newer; packaging has no third-party dependencies.
 
 ```sh
 python3 scripts/package.py generate
@@ -55,6 +55,8 @@ python3 scripts/package.py check
 python3 -m unittest discover -s tests -v
 python3 scripts/package.py build
 ```
+
+The build produces `dist/solar-0.2.0.zip` and the equivalent `.plugin` archive. CI also attaches these packages to its validation runs. Archives contain the installable plugin and setup guides; development scripts and tests remain in the source checkout.
 
 Edit root `plugin.json` for package metadata and root `mcp.json` for the connection. Regenerate the Claude compatibility files and standalone client profiles, then commit those generated files with the source change. `check` rejects drift. The build includes an explicit set of package files and excludes repository history and unrelated local files. See [validation and client acceptance](docs/validation.md).
 

@@ -28,6 +28,8 @@ The existing public endpoint `https://api.sol.wickedsick.com/mcp` returned HTTP 
 
 The trailing-slash `/mcp/` also returned 404, while `/healthz` and `/openapi.json` served the REST API successfully. The backend's checked-in php01 systemd unit launches the REST API alone; its separate Docker/Caddy example routes MCP to a different service on port 8002. Missing MCP service/proxy routing on php01 is the likely cause, pending live configuration inspection. This package keeps the documented URL rather than guessing an alternate host. Production service changes require a separate deployment.
 
+[Backend PR #47](https://github.com/Wicked-Sick-Ltd/solar-system-db/pull/47) prepares the separate service, proxy routing, host/origin configuration and rollout checks. Merging the plugin does not activate that service. The proposed rollout must be checked against the live host and explicitly approved before applying it.
+
 Repeat a bounded initialization check after the endpoint has been restored:
 
 ```sh
