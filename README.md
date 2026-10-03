@@ -27,7 +27,7 @@ Clone this repository into a new directory, or extract the built archive. While 
 - URL: **`https://api.sol.wickedsick.com/mcp`**
 - Authentication: the intended public service requires no API key.
 
-**Live acceptance pending:** this URL returned HTTP 404 to an MCP initialization request on 2026-10-02. Installing the package cannot repair a missing server route. See the [validation record](docs/validation.md) for the current evidence and remaining checks.
+**Live acceptance deferred to the domain move:** this URL returned HTTP 404 to an MCP initialization request on 2026-10-02. Craig identified Cloudflare WAF rules as the issue on 2026-10-03; address them during the move to the new domain, then repeat live client checks. See the [validation record](docs/validation.md) for the current evidence and remaining checks.
 
 Discover available tools from the connected server rather than relying on a fixed tool count. Existing workflows use catalogue lookup, sky positions, meteor showers, close approaches and source metadata. Deployment determines which newer catalogue and observing tools are available.
 
