@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "solar-system-db": {
+      "url": "https://api.sol.wickedsick.com/mcp"
+    }
+  }
+}

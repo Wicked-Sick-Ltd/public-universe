@@ -5,12 +5,16 @@ description: >
   "social posts about what's up this month", "newsletter for Solar subscribers", "SEO content for sol.wickedsick.com",
   or wants publishable astronomy content built from live Solar data that links back to Solar pages.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Sky this week: content for Solar
 
 Produce accurate, publishable content (blog post, newsletter, or social posts) that drives people to sol.wickedsick.com.
+
+## Client compatibility
+
+Use the connected Solar MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## 1. Brief
 Confirm the following, and use the defaults if the user doesn't say:

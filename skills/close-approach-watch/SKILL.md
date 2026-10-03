@@ -5,12 +5,16 @@ description: >
   "any close approaches this week", "is any asteroid going to hit us", "near-Earth objects coming up",
   "asteroid flyby for our assembly/newsletter", or wants upcoming close approaches explained in plain English.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Close-approach watch
 
 Report upcoming asteroid and comet flybys calmly and accurately, with sizes and distances people can picture.
+
+## Client compatibility
+
+Use the connected Solar MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## Steps
 1. **Window and threshold.** Default to the next 30 days, with Earth as the body and `max_dist_au=0.05` (about 19.5 lunar distances). Narrow to 0.01 AU for "really close" lists.

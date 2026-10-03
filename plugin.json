@@ -1,0 +1,44 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "solar",
+  "version": "0.2.0",
+  "description": "Public Universe astronomy tools and skills: explore live catalogue data, plan an evening of stargazing, explain objects, build lessons and check space facts using the public Solar MCP server.",
+  "author": {
+    "name": "Wicked Sick Ltd",
+    "email": "hello@wickedsick.com",
+    "url": "https://wickedsick.com"
+  },
+  "homepage": "https://sol.wickedsick.com",
+  "repository": "https://github.com/Wicked-Sick-Ltd/solar-plugin",
+  "license": "MIT",
+  "keywords": [
+    "astronomy",
+    "solar-system",
+    "education",
+    "nasa",
+    "jpl",
+    "stargazing",
+    "mcp",
+    "public-universe",
+    "agent-skills"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Public Universe (Solar)",
+        "shortDescription": "Explore astronomy with live catalogue data",
+        "developerName": "Wicked Sick Ltd",
+        "category": "Education",
+        "capabilities": [
+          "Read"
+        ],
+        "websiteURL": "https://sol.wickedsick.com",
+        "defaultPrompt": [
+          "What can I see tonight from Romsey?",
+          "Explain Saturn to a ten-year-old using live catalogue data.",
+          "Check the astronomy facts in this worksheet."
+        ]
+      }
+    }
+  }
+}
