@@ -1,0 +1,21 @@
+{
+  "name": "public-universe",
+  "interface": {
+    "displayName": "Public Universe"
+  },
+  "plugins": [
+    {
+      "name": "solar",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Wicked-Sick-Ltd/solar-plugin.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Education"
+    }
+  ]
+}

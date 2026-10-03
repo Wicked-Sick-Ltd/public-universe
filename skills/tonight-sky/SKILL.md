@@ -5,12 +5,16 @@ description: >
   "which planets are visible", "when does Jupiter rise", "stargazing plan for this weekend",
   "where do I look for Mars", or wants a viewing plan for a place and date using live Solar data.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Tonight's sky
 
 Build a clear, practical viewing plan for a specific place and evening, using the Solar MCP (`solar-system-db`) tools.
+
+## Client compatibility
+
+Use the connected Solar MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## 1. Pin down place and time
 - **Location**: accept a town, postcode, coordinates or a what3words address. The MCP needs `lat`/`lon`, so convert a town or postcode to approximate coordinates (2 decimal places is plenty). If the user gives a what3words address, point them to sol.wickedsick.com (it converts what3words on the object pages) or ask for a nearby town. Never guess a location. Ask if none is given.
