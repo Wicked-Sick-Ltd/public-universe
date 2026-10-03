@@ -37,7 +37,7 @@ Where your account and workspace policy allow developer mode:
 4. Review the discovered tools, then start a new conversation and enable the connection from the tools menu.
 5. Ask it to retrieve Mars's catalogue record and cite its source. Verify that a tool actually ran.
 
-The official [connection and testing guide](https://developers.openai.com/plugins/deploy/connect-chatgpt) documents this flow and policy-dependent availability. If initialization returns 404, the host has not exposed the expected route; retrying setup or adding an API key will not fix it.
+The official [connection and testing guide](https://developers.openai.com/plugins/deploy/connect-chatgpt) documents this flow and policy-dependent availability. A 404 during initialization can come from the edge or origin and does not establish an authentication problem. The current Cloudflare WAF issue is deferred to the new-domain migration; see the [validation record](validation.md).
 
 ### Add the workflows
 
