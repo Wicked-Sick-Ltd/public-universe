@@ -21,9 +21,16 @@ Copy each desired **whole directory** from `skills/` into your project's `.agent
 
 Current Codex supports root `plugin.json`, `mcp.json` and `skills/`. The [OpenAI package guide](https://developers.openai.com/plugins/build/plugins) describes local and Git-backed marketplaces.
 
-[clients/openai-marketplace.json](../clients/openai-marketplace.json) is a ready-to-merge marketplace definition referencing this repository's `main` branch. **Use it after the multi-vendor PR is merged**, or change `source.ref` to the reviewed development commit. Merge its plugin entry into `$REPO_ROOT/.agents/plugins/marketplace.json` or your personal `~/.agents/plugins/marketplace.json`; preserve any existing marketplace name and entries. Restart the desktop app, select the marketplace in the Plugins Directory and install `solar`.
+The public catalog is [Wicked-Sick-Ltd/ai-marketplace](https://github.com/Wicked-Sick-Ltd/ai-marketplace). Once its PublicUniverse entry is merged and the source repository is public:
 
-For a fully local test, replace the entry's source with `{"source":"local","path":"./plugins/solar"}` and place the whole plugin at `plugins/solar` inside the marketplace root. Paths start with `./` and must stay inside that root. Use either the full plugin or the manual MCP/skills route to avoid duplicates.
+```sh
+codex plugin marketplace add Wicked-Sick-Ltd/ai-marketplace --sparse .agents/plugins
+codex plugin add publicuniverse@wickedsick
+```
+
+[clients/openai-marketplace.json](../clients/openai-marketplace.json) is a standalone development example, not a second public catalog. Its `main` reference works only after the plugin change is merged; for review, replace it with the tested revision. Production catalog entries must pin the full reviewed commit SHA. The repository URL must be updated after the organisation transfer. See [submission readiness](submission.md).
+
+For a fully local test, replace the entry's source with `{"source":"local","path":"./plugins/publicuniverse"}` and place the whole plugin at `plugins/publicuniverse` inside the marketplace root. Paths start with `./` and must stay inside that root. Use either the full plugin or the manual MCP/skills route to avoid duplicates.
 
 ## ChatGPT
 
@@ -32,7 +39,7 @@ For a fully local test, replace the entry's source with `{"source":"local","path
 Where your account and workspace policy allow developer mode:
 
 1. Open **Settings → Security and login → Developer mode**.
-2. Open [ChatGPT Plugins](https://chatgpt.com/plugins), choose the plus button, and name the connection **Public Universe (Solar)**.
+2. Open [ChatGPT Plugins](https://chatgpt.com/plugins), choose the plus button, and name the connection **PublicUniverse**.
 3. Enter `https://api.sol.wickedsick.com/mcp` as the public MCP URL. The intended public service needs no authentication.
 4. Review the discovered tools, then start a new conversation and enable the connection from the tools menu.
 5. Ask it to retrieve Mars's catalogue record and cite its source. Verify that a tool actually ran.

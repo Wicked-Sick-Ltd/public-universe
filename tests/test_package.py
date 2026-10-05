@@ -40,6 +40,14 @@ class PackageTests(unittest.TestCase):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content)
 
+    def symlink(self, path, target, **kwargs):
+        try:
+            path.symlink_to(target, **kwargs)
+        except OSError as error:
+            if getattr(error, "winerror", None) == 1314:
+                self.skipTest("Windows account lacks symlink privilege; exercised by Linux CI")
+            raise
+
     def test_rejects_unknown_plugin_fields_before_generation(self):
         manifest = json.loads((self.root / "plugin.json").read_text())
         manifest["unsupportedField"] = True
@@ -95,6 +103,10 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(tomllib.loads((self.root / "clients/codex.toml").read_text())["mcp_servers"]["solar-system-db"]["url"], expected_url)
         self.assertNotIn("extensions", read(".claude-plugin/plugin.json"))
         self.assertNotIn("$schema", read(".claude-plugin/plugin.json"))
+        gemini = read("gemini-extension.json")
+        self.assertEqual(gemini["name"], read("plugin.json")["name"])
+        self.assertEqual(gemini["version"], read("plugin.json")["version"])
+        self.assertEqual(gemini["mcpServers"]["solar-system-db"], {"httpUrl": expected_url})
         marketplace = read("clients/openai-marketplace.json")
         self.assertEqual(marketplace["plugins"][0]["source"]["url"], "https://example.org/solar.git")
 
@@ -112,6 +124,24 @@ class PackageTests(unittest.TestCase):
         with self.assertRaisesRegex(package.ValidationError, "Generated file drift: clients/vscode.json"):
             package.build(self.root)
         self.assertFalse((self.root / "dist").exists())
+
+    def test_listing_icons_are_packaged_and_cannot_escape_root(self):
+        manifest = json.loads((self.root / "plugin.json").read_text())
+        interface = manifest["extensions"]["com.openai"]["interface"]
+        interface.update(logo="./assets/icon.svg", composerIcon="./assets/icon.svg")
+        self.write("plugin.json", json.dumps(manifest))
+        self.write("assets/icon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"/>')
+        package.generate(self.root)
+        with zipfile.ZipFile(package.build(self.root)[0]) as archive:
+            self.assertIn("assets/icon.svg", archive.namelist())
+            self.assertIn("gemini-extension.json", archive.namelist())
+        for invalid in ("../outside.svg", str(self.root / "assets/icon.svg")):
+            with self.subTest(path=invalid):
+                interface["logo"] = invalid
+                self.write("plugin.json", json.dumps(manifest))
+                package.generate(self.root)
+                with self.assertRaises(package.ValidationError):
+                    package.check(self.root)
 
     def test_archives_are_complete_deterministic_and_allowlisted(self):
         for relative in (".env", ".git/config", "notes.txt", "docs/private.md", "clients/secret.json", "skills/example/references/private.md"):
@@ -156,6 +186,11 @@ class PackageTests(unittest.TestCase):
                 with self.assertRaises(package.ValidationError):
                     package.check(self.root)
 
+    def test_windows_skill_line_endings(self):
+        path = self.root / "skills/example/SKILL.md"
+        path.write_bytes(path.read_text().replace("\n", "\r\n").encode())
+        self.assertIn("skills/example/SKILL.md", package.check(self.root))
+
     def test_remote_configuration_rejects_credentials_and_non_https(self):
         for url in ("http://example.org/mcp", "https://user:pass@example.org/mcp", "https://example.org/mcp?key=secret"):
             with self.subTest(url=url):
@@ -166,28 +201,28 @@ class PackageTests(unittest.TestCase):
     def test_symlinked_package_files_are_rejected(self):
         path = self.root / "skills/example/references/data-caveats.md"
         path.unlink()
-        path.symlink_to(self.root / "README.md")
+        self.symlink(path, self.root / "README.md")
         with self.assertRaisesRegex(package.ValidationError, "Symlink"):
             package.build(self.root)
 
     def test_symlinked_directories_are_rejected(self):
         path = self.root / "skills/example/references"
         path.rename(self.root / "references")
-        path.symlink_to(self.root / "references", target_is_directory=True)
+        self.symlink(path, self.root / "references", target_is_directory=True)
         with self.assertRaisesRegex(package.ValidationError, "Symlink"):
             package.check(self.root)
 
     def test_generate_does_not_follow_symlinks(self):
         path = self.root / "clients/cursor.json"
         path.unlink()
-        path.symlink_to(self.root / "README.md")
+        self.symlink(path, self.root / "README.md")
         with self.assertRaisesRegex(package.ValidationError, "symlink"):
             package.generate(self.root)
         self.assertEqual((self.root / "README.md").read_text(), "Public documentation\n")
 
     def test_build_does_not_follow_output_symlinks(self):
         output = self.root / "dist"
-        output.symlink_to(self.root, target_is_directory=True)
+        self.symlink(output, self.root, target_is_directory=True)
         with self.assertRaisesRegex(package.ValidationError, "Symlink"):
             package.build(self.root)
 

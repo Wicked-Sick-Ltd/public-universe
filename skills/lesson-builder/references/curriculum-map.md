@@ -1,8 +1,8 @@
-# Curriculum map (England): where Solar fits
+# Curriculum map (England): where PublicUniverse fits
 
 Use these topic areas for curriculum links. Name the area. Don't quote statutory wording you haven't verified, and don't give exam-board spec reference numbers.
 
-| Stage | Subject area | Good Solar hooks |
+| Stage | Subject area | Good PublicUniverse hooks |
 |---|---|---|
 | Year 1 | Science: seasonal changes (day length across seasons) | Sun's rise/set times each week from the Sun page |
 | KS1 | Geography: simple compass directions | "Which way do we face to see Saturn?" |
@@ -19,8 +19,8 @@ Use these topic areas for curriculum links. Name the area. Don't quote statutory
 | KS5 | A-level Maths: statistics, regression, logarithms | log–log fits; asteroid size distributions |
 | KS5 | A-level Computer Science (NEA), EPQ | SQL on the downloadable 1.5 m-row SQLite catalogue |
 
-Solar links teachers can use:
-- Planets: https://sol.wickedsick.com/planets
-- Orrery: https://sol.wickedsick.com/orrery
-- Any object: https://sol.wickedsick.com/objects/<id> (e.g. planet-saturn, comet-1p-halley)
-- API and MCP setup: https://sol.wickedsick.com/api
+PublicUniverse links teachers can use:
+- Planets: https://publicuniverse.net/planets
+- Orrery: https://publicuniverse.net/orrery
+- Any object: https://publicuniverse.net/objects/<id> (e.g. planet-saturn, comet-1p-halley)
+- API and MCP setup: https://publicuniverse.net/api

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate client examples and deterministic, allowlisted Solar plugin archives.
+"""Generate client examples and deterministic, allowlisted PublicUniverse plugin archives.
 
 Requires Python 3.11+. No network access, dependencies, or client configuration writes.
 Validation enforces this repository's structural contract, not general JSON Schema.
@@ -16,7 +16,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = ("docs/clients.md", "docs/openai.md", "docs/validation.md")
+DOCS = ("docs/clients.md", "docs/openai.md", "docs/validation.md", "docs/submission.md")
 SCHEMA_ROOT = "https://agent-plugins.org/schemas/1.0.0/"
 
 
@@ -26,7 +26,7 @@ class ValidationError(ValueError):
 
 def read_file(root, relative):
     path = root / relative
-    if path.is_absolute() and not path.is_relative_to(root):
+    if Path(relative).is_absolute() or not path.is_relative_to(root):
         raise ValidationError(f"Path outside package: {relative}")
     if ".." in Path(relative).parts:
         raise ValidationError(f"Parent path is not allowed: {relative}")
@@ -111,13 +111,17 @@ def generated_files(root):
     return {
         ".claude-plugin/plugin.json": json_bytes({key: value for key, value in plugin.items() if key not in ("$schema", "extensions")}),
         ".mcp.json": json_bytes({"mcpServers": http}),
+        "gemini-extension.json": json_bytes({
+            "name": plugin["name"], "version": plugin["version"],
+            "mcpServers": {name: {"httpUrl": server["url"]} for name, server in servers.items()},
+        }),
         "clients/claude.json": json_bytes({"mcpServers": http}),
         "clients/codex.toml": codex.encode(),
         "clients/cursor.json": json_bytes({"mcpServers": {name: {"url": server["url"]} for name, server in servers.items()}}),
         "clients/vscode.json": json_bytes({"servers": http}),
         "clients/copilot-cli.json": json_bytes({"mcpServers": {name: {**server, "tools": ["*"]} for name, server in http.items()}}),
         "clients/openai-marketplace.json": json_bytes({
-            "name": "public-universe", "interface": {"displayName": "Public Universe"},
+            "name": "publicuniverse-local", "interface": {"displayName": "PublicUniverse local preview"},
             "plugins": [{"name": plugin["name"], "source": {"source": "url", "url": repository, "ref": "main"},
                          "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Education"}],
         }),
@@ -146,7 +150,7 @@ def skill_files(root):
         raise ValidationError("No skills found")
     for path in paths:
         relative = path.relative_to(root).as_posix()
-        content = read_file(root, relative).decode()
+        content = read_file(root, relative).decode().replace("\r\n", "\n")
         pieces = content.split("---", 2)
         if len(pieces) != 3 or pieces[0] or not pieces[1].startswith("\n"):
             raise ValidationError(f"Missing frontmatter: {relative}")
@@ -184,6 +188,11 @@ def check(root):
         if read_file(root, relative) != content:
             raise ValidationError(f"Generated file drift: {relative}; run python3 scripts/package.py generate")
     files = {"plugin.json", "mcp.json", "README.md", "CHANGELOG.md", "LICENSE", *DOCS, *expected, *skill_files(root)}
+    interface = canonical(root)[0].get("extensions", {}).get("com.openai", {}).get("interface", {})
+    for field in ("logo", "composerIcon"):
+        if field in interface:
+            read_file(root, interface[field])
+            files.add(Path(interface[field]).as_posix())
     for relative in files:
         read_file(root, relative)
     return sorted(files)
