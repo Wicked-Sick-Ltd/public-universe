@@ -1,11 +1,11 @@
 {
-  "name": "public-universe",
+  "name": "publicuniverse-local",
   "interface": {
-    "displayName": "Public Universe"
+    "displayName": "PublicUniverse local preview"
   },
   "plugins": [
     {
-      "name": "solar",
+      "name": "publicuniverse",
       "source": {
         "source": "url",
         "url": "https://github.com/Wicked-Sick-Ltd/solar-plugin.git",

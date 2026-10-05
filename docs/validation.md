@@ -1,6 +1,22 @@
 # Multi-vendor validation
 
-Development acceptance record, 2026-10-02. Package checks and live service checks are separate.
+Development acceptance record, updated 2026-10-05 for PublicUniverse 0.3.0. Package checks and live service checks are separate.
+
+## PublicUniverse compatibility results (2026-10-05)
+
+The ZIP was extracted into a temporary marketplace and installed into isolated client profiles. No model inference or user-profile configuration changes were needed.
+
+| Client | Evidence | Remaining acceptance |
+| --- | --- | --- |
+| Codex CLI 0.160.0 | Native marketplace registration and plugin installation succeeded. App-server `plugin/read` reported PublicUniverse 0.3.0 installed/enabled, all seven namespaced skills, `solar-system-db`, descriptions and icon paths. | Live tool execution and conversational workflows. |
+| Claude Code 2.1.273 | `claude plugin validate .` accepted the manifest. A model-free stream-JSON initialization with `--plugin-dir` discovered all seven `publicuniverse:` skill commands in an isolated profile and exited 0. | This version predates MCP-entry validation; live tools and conversational workflows remain unverified. |
+| Gemini CLI 0.62.0, Node 24.21.0 | Native extension installation exited 0. Extension/skill discovery found all seven skills and the MCP server. | Live tool execution; discovery reports the inaccessible server. Node 25.6.1 hit an installer shutdown assertion after writing the installation; use the tested Node 24 runtime. |
+| GitHub Copilot CLI 1.0.91 | Installed the archive with seven skills; `plugin list` and `skill list` confirmed version 0.3.0 and every workflow. | Live tools and VS Code UI acceptance. Direct installs are deprecated by this CLI; prefer the marketplace entry for distribution. |
+| Cursor | Root manifests pass the official Agent Plugins 1.0.0 schemas, the format documented by Cursor for skills and MCP. | No Cursor executable available on this machine: desktop discovery and live execution remain unverified. |
+
+Offline package validation passed for all 35 allowlisted files. The 19-test suite passed on Windows with four symlink cases skipped because this account lacks symlink privilege; Linux CI runs those security checks. Both distributable archives build. The root portable manifest carries OpenAI metadata, so a duplicate `.codex-plugin` manifest is unnecessary.
+
+The canonical website returned HTTP 200. MCP initialization still returned HTTP 404 with `{"detail":"Not Found"}` from the existing API host; no live astronomy tool call succeeded. See [submission.md](submission.md) for rollout prerequisites and reviewer scenarios. These results establish package compatibility, not public-directory approval or full end-to-end support.
 
 ## Repeatable local checks
 
