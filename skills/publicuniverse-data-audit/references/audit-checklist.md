@@ -12,7 +12,7 @@
 | Uranus | 25,362 | 8.68e25 | 19.19 | 30,689 |
 | Neptune | 24,622 | 1.02e26 | 30.07 | 60,182 |
 
-NASA's quoted equatorial surface gravity (m/s², at 1 bar for the giants): Mercury 3.7, Venus 8.87, Earth 9.80, Mars 3.71, Jupiter 24.79, Saturn 10.44, Uranus 8.87, Neptune 11.15. Solar's GM/R² values are higher for the giants. That is expected, but it must be labelled.
+NASA's quoted equatorial surface gravity (m/s², at 1 bar for the giants): Mercury 3.7, Venus 8.87, Earth 9.80, Mars 3.71, Jupiter 24.79, Saturn 10.44, Uranus 8.87, Neptune 11.15. PublicUniverse's GM/R² values are higher for the giants. That is expected, but it must be labelled.
 
 ## Moon counts: last known reference points
 - IAU MPC announcement, 16–26 March 2026: **Saturn 285**, **Jupiter 101** confirmed.

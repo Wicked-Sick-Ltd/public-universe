@@ -1,0 +1,9 @@
+{
+  "name": "publicuniverse",
+  "version": "0.3.0",
+  "mcpServers": {
+    "solar-system-db": {
+      "httpUrl": "https://api.sol.wickedsick.com/mcp"
+    }
+  }
+}

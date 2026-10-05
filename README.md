@@ -1,8 +1,8 @@
-# Public Universe · Solar plugin
+# PublicUniverse plugin
 
-Astronomy tools and seven reusable workflows for **ChatGPT, Codex, Cursor, GitHub Copilot and Claude**. Explore catalogue data from NASA/JPL and other astronomical organisations, prepare lessons, explain objects and plan an evening of stargazing.
+Astronomy tools and seven reusable workflows for **Codex, Claude, Cursor, Gemini CLI and GitHub Copilot**, with a separate ChatGPT connection route. Explore catalogue data, prepare lessons, explain objects and plan an evening of stargazing with [PublicUniverse](https://publicuniverse.net).
 
-The stable package name is **`solar`**. Public Universe is the project name; the existing service URLs remain in place during the domain migration.
+The package name is **`publicuniverse`** from version 0.3.0. Website links use `publicuniverse.net`; the existing MCP URL remains until its replacement is confirmed. See [migration and public submission](docs/submission.md) before switching an existing `solar` installation.
 
 ## Choose your client
 
@@ -14,11 +14,12 @@ The stable package name is **`solar`**. Public Universe is the project name; the
 | GitHub Copilot CLI | [Local portable plugin](docs/clients.md#github-copilot-cli-full-plugin) |
 | GitHub Copilot in VS Code | [Local portable plugin](docs/clients.md#github-copilot-in-vs-code-full-plugin) |
 | Claude Code | [Existing Claude plugin format](docs/clients.md#claude-code-existing-plugin-compatibility) |
+| Gemini CLI | [Native extension with the same seven skills](docs/clients.md#gemini-cli) |
 | Other MCP clients | Add the HTTPS endpoint below using the client's Streamable HTTP setup. Skills need separate Agent Skills support. |
 
 The root `plugin.json`, `mcp.json` and `skills/` use the [portable Agent Plugins format](https://agent-plugins.org/). Claude compatibility files are also included. A tools-only MCP connection does **not** install the skills. Client version, account and organisation policies affect availability; this is not a claim of public marketplace approval.
 
-Clone this repository into a new directory, or extract the built archive. While reviewing the development PR, use its `codex/multi-vendor-plugin` branch; `main` gains these files only after merge. Follow the guide for your client and preserve any existing configuration.
+Clone the reviewed revision into a new directory, or extract the built archive. Follow the guide for your client and preserve any existing configuration. Public catalog installation is pending the repository transfer, visibility change and live MCP acceptance.
 
 ## Connection
 
@@ -41,7 +42,7 @@ Discover available tools from the connected server rather than relying on a fixe
 | `object-explainer` | Explain catalogue objects at a chosen reading level |
 | `close-approach-watch` | Explain upcoming asteroid and comet flybys |
 | `sky-this-week` | Draft a sourced sky roundup or social copy |
-| `solar-data-audit` | Compare catalogue data with official sources |
+| `publicuniverse-data-audit` | Compare catalogue data with official sources |
 
 Every skill includes its own reference files, so it can be installed independently. The same source skills are used by every client. Workflow instructions distinguish unavailable tools from verified results.
 
@@ -56,9 +57,9 @@ python3 -m unittest discover -s tests -v
 python3 scripts/package.py build
 ```
 
-The build produces `dist/solar-0.2.0.zip` and the equivalent `.plugin` archive. CI also attaches these packages to its validation runs. Archives contain the installable plugin and setup guides; development scripts and tests remain in the source checkout.
+The build produces `dist/publicuniverse-0.3.0.zip` and the equivalent `.plugin` archive. CI also attaches these packages to its validation runs. Archives contain the installable plugin and setup guides; development scripts and tests remain in the source checkout.
 
-Edit root `plugin.json` for package metadata and root `mcp.json` for the connection. Regenerate the Claude compatibility files and standalone client profiles, then commit those generated files with the source change. `check` rejects drift. The build includes an explicit set of package files and excludes repository history and unrelated local files. See [validation and client acceptance](docs/validation.md).
+Edit root `plugin.json` for package metadata and root `mcp.json` for the connection. Regenerate the Claude compatibility files, Gemini extension and standalone client profiles, then commit those generated files with the source change. `check` rejects drift. The build includes an explicit set of package files and excludes repository history and unrelated local files. See [validation and client acceptance](docs/validation.md).
 
 ## Data and observing
 
