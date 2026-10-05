@@ -26,7 +26,7 @@ class ValidationError(ValueError):
 
 def read_file(root, relative):
     path = root / relative
-    if path.is_absolute() and not path.is_relative_to(root):
+    if Path(relative).is_absolute() or not path.is_relative_to(root):
         raise ValidationError(f"Path outside package: {relative}")
     if ".." in Path(relative).parts:
         raise ValidationError(f"Parent path is not allowed: {relative}")

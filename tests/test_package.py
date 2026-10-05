@@ -135,11 +135,13 @@ class PackageTests(unittest.TestCase):
         with zipfile.ZipFile(package.build(self.root)[0]) as archive:
             self.assertIn("assets/icon.svg", archive.namelist())
             self.assertIn("gemini-extension.json", archive.namelist())
-        interface["logo"] = "../outside.svg"
-        self.write("plugin.json", json.dumps(manifest))
-        package.generate(self.root)
-        with self.assertRaises(package.ValidationError):
-            package.check(self.root)
+        for invalid in ("../outside.svg", str(self.root / "assets/icon.svg")):
+            with self.subTest(path=invalid):
+                interface["logo"] = invalid
+                self.write("plugin.json", json.dumps(manifest))
+                package.generate(self.root)
+                with self.assertRaises(package.ValidationError):
+                    package.check(self.root)
 
     def test_archives_are_complete_deterministic_and_allowlisted(self):
         for relative in (".env", ".git/config", "notes.txt", "docs/private.md", "clients/secret.json", "skills/example/references/private.md"):
