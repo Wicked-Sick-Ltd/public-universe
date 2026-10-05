@@ -1,13 +1,13 @@
 {
-  "name": "solar",
-  "version": "0.2.0",
-  "description": "Public Universe astronomy tools and skills: explore live catalogue data, plan an evening of stargazing, explain objects, build lessons and check space facts using the public Solar MCP server.",
+  "name": "publicuniverse",
+  "version": "0.3.0",
+  "description": "PublicUniverse astronomy tools and skills: explore catalogue data, plan stargazing, explain objects, build lessons and check space facts using a public MCP server.",
   "author": {
     "name": "Wicked Sick Ltd",
     "email": "hello@wickedsick.com",
     "url": "https://wickedsick.com"
   },
-  "homepage": "https://sol.wickedsick.com",
+  "homepage": "https://publicuniverse.net",
   "repository": "https://github.com/Wicked-Sick-Ltd/solar-plugin",
   "license": "MIT",
   "keywords": [
