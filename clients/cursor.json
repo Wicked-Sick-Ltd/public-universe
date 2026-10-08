@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "solar-system-db": {
+    "publicuniverse": {
       "url": "https://api.sol.wickedsick.com/mcp"
     }
   }

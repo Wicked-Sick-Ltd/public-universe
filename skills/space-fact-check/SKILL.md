@@ -5,7 +5,7 @@ description: >
   "is this right about Saturn's moons", "verify the numbers in my worksheet/brochure/post",
   "check what the AI said about the planets", or pastes astronomy claims to verify against live PublicUniverse data.
 metadata:
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # Space fact-check
@@ -14,12 +14,12 @@ Verify astronomy claims against PublicUniverse's live catalogue, and explain any
 
 ## Client compatibility
 
-Use the connected PublicUniverse MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
+Use the connected PublicUniverse MCP server (`publicuniverse`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## Steps
 1. **Extract claims.** List every checkable claim from the text or file: numbers, comparisons, dates, "biggest/fastest/only" statements and positions ("Saturn is up all night in October").
 2. **Read `references/data-caveats.md`** before judging anything. It covers moon counts, gravity, Venus's two kinds of day, the accuracy of positions, and counts that change nightly.
-3. **Check each claim with the PublicUniverse MCP** (`solar-system-db`):
+3. **Check each claim with the PublicUniverse MCP** (`publicuniverse`):
    - Physical and orbital facts: `get_object`
    - Moon counts: `list_moons` (count separately any provisional moons with a null period)
    - Comet returns: `next_perihelion` (convert JD to a calendar date)

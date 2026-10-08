@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
-    "solar-system-db": {
+    "publicuniverse": {
       "type": "streamable-http",
       "url": "https://api.sol.wickedsick.com/mcp"
     }
