@@ -5,7 +5,7 @@ description: >
   "Year 5 Earth and space lesson", "KS3 gravity activity", "GCSE space physics starter", "A-level Kepler practical",
   "STEM club activity using real NASA data", or wants any classroom activity built from live PublicUniverse data for a UK key stage.
 metadata:
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # Lesson builder
@@ -14,7 +14,7 @@ Create a ready-to-teach lesson or activity that uses **real values pulled live f
 
 ## Client compatibility
 
-Use the connected PublicUniverse MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
+Use the connected PublicUniverse MCP server (`publicuniverse`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## 1. Clarify (ask only for what's missing)
 - Key stage or year group: KS1, LKS2, UKS2, KS3, KS4/GCSE, KS5/A-level, or a club.
@@ -23,7 +23,7 @@ Use the connected PublicUniverse MCP server (`solar-system-db`); clients may pre
 - Output: lesson plan, worksheet, or both. Default to both.
 
 ## 2. Pull the data
-Use the PublicUniverse MCP (`solar-system-db`) and never type values from memory.
+Use the PublicUniverse MCP (`publicuniverse`) and never type values from memory.
 - Planet facts: `get_object("<Planet>")`, which returns `physical.radius_km`, `physical.surface_gravity_m_s2`, `physical.length_of_day_hours`, `orbital.semi_major_axis_au`, `orbital.orbital_period_days`, `physical.axial_tilt_deg` and `physical.mass_kg`.
 - Moons: `list_moons`. Comets: `search`, `next_perihelion`, `get_object`. Near-Earth asteroids: `find_close_approaches`. Where things are now: `compute_position` and `get_sky_position`.
 - Read `references/data-caveats.md` before using gravity, day length or moon counts. These are the usual traps (e.g. the two kinds of "day" on Venus, and gravity given as GM/R²).
