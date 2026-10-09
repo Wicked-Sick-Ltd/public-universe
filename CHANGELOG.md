@@ -7,7 +7,7 @@ All notable changes to this plugin are documented here.
 ### Changed
 - **Breaking for installs of 0.4.0:** the plugin id is now `public-universe` (it was `publicuniverse`). Claude skill commands are `/public-universe:…`. Remove the older plugin before installing this one.
 - The MCP connection name stays `publicuniverse`, so saved MCP configs and tool prefixes from 0.4.0 keep working. Tool names are unchanged. The audit skill stays `publicuniverse-data-audit`.
-- Repository links and install commands use `https://github.com/Wicked-Sick-Ltd/public-universe`. `Wicked-Sick-Ltd/solar-plugin` remains this repository until that rename; GitHub will redirect the old name afterwards. The docs no longer tell anyone to clone `publicuniverse-plugin`, which 404s. The 0.4.0 metadata below recorded that incorrect path; it is history.
+- Repository links and install commands use `https://github.com/Wicked-Sick-Ltd/public-universe`. GitHub redirects `Wicked-Sick-Ltd/solar-plugin`. The docs no longer tell anyone to clone `publicuniverse-plugin`, which 404s. The 0.4.0 metadata below recorded that incorrect path; it is history.
 - The unpublished MCP Registry id stays `net.publicuniverse/publicuniverse`. Its description now mentions exoplanets and the galaxy map.
 
 ### Added

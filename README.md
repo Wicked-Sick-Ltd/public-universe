@@ -7,7 +7,7 @@ Free astronomy tools and seven reusable workflows for **Claude Code, Cursor, Cod
 - Repository: https://github.com/Wicked-Sick-Ltd/public-universe
 - Licence: MIT, © Wicked Sick Limited. Please credit "Wicked Sick Ltd" when you reuse it (see [NOTICE](NOTICE)).
 
-Clone and install from `https://github.com/Wicked-Sick-Ltd/public-universe`. This repository is `Wicked-Sick-Ltd/solar-plugin` until that rename lands; GitHub will then redirect the old name. A local checkout works either way. `Wicked-Sick-Ltd/publicuniverse-plugin` is not this repository, and links that use it 404.
+Clone and install from `https://github.com/Wicked-Sick-Ltd/public-universe`. GitHub redirects the previous name `Wicked-Sick-Ltd/solar-plugin`. A local checkout works as well. `Wicked-Sick-Ltd/publicuniverse-plugin` is not this repository, and links that use it 404.
 
 The plugin id changed from `publicuniverse` to `public-universe` in 0.5.0. The MCP connection name stays `publicuniverse`, so existing MCP configs and tool prefixes that already use that name keep working. Disable an older `publicuniverse` or `solar` plugin before installing this one, so the tools and skills are not loaded twice.
 
@@ -172,7 +172,7 @@ The same data is published as REST. Interactive reference: https://api.sol.wicke
 ## Suggest a feature
 
 - Website form, once it is deployed: https://publicuniverse.net/feedback. On 9 October 2026 that page was not being served yet. Use it for ideas, corrections and contact messages when it is.
-- Plugin bugs, install problems and skill changes: [GitHub issues](https://github.com/Wicked-Sick-Ltd/public-universe/issues). Until the rename finishes, the same issues are on `Wicked-Sick-Ltd/solar-plugin`, and GitHub will redirect that address.
+- Plugin bugs, install problems and skill changes: [GitHub issues](https://github.com/Wicked-Sick-Ltd/public-universe/issues). Issues opened on `Wicked-Sick-Ltd/solar-plugin` redirect there.
 - Email: hello@wickedsick.com.
 
 ## Upgrading

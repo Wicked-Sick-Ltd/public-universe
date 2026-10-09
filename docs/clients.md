@@ -1,6 +1,6 @@
 # Install in Claude Code, Cursor, Copilot, Gemini CLI or Grok
 
-Use a checkout of https://github.com/Wicked-Sick-Ltd/public-universe containing this version's root `plugin.json`, `mcp.json` and `skills/` directory. Until the GitHub rename from `Wicked-Sick-Ltd/solar-plugin` finishes, that old name is the same repository; GitHub will redirect it afterwards. A local checkout works either way. `Wicked-Sick-Ltd/publicuniverse-plugin` is not this repository. See the [README](../README.md) for the short install, [tools](tools.md) for the 33 MCP tools, and [OpenAI setup](openai.md) for ChatGPT and Codex. Instructions below were checked against vendor documentation on 2026-10-02; installed client versions and organisation settings may differ.
+Use a checkout of https://github.com/Wicked-Sick-Ltd/public-universe containing this version's root `plugin.json`, `mcp.json` and `skills/` directory. GitHub redirects `Wicked-Sick-Ltd/solar-plugin` to that name. A local checkout works as well. `Wicked-Sick-Ltd/publicuniverse-plugin` is not this repository. See the [README](../README.md) for the short install, [tools](tools.md) for the 33 MCP tools, and [OpenAI setup](openai.md) for ChatGPT and Codex. Instructions below were checked against vendor documentation on 2026-10-02; installed client versions and organisation settings may differ.
 
 The full plugin supplies the astronomy tools and all seven workflows. An MCP-only connection supplies tools; it does not install the skill instructions or their references. Choose one installation route per client to avoid duplicate tools and skills. The public service needs no API key. The plugin id is `public-universe`. The MCP connection name stays `publicuniverse`.
 
@@ -90,7 +90,7 @@ gemini extensions list
 gemini skills list
 ```
 
-Review the installation prompt, restart Gemini and check that Public Universe and all seven skills appear. Repository installs use `gemini extensions install https://github.com/Wicked-Sick-Ltd/public-universe --ref <reviewed-tag-or-sha>`. Until the rename, `Wicked-Sick-Ltd/solar-plugin` is the same repository; GitHub will redirect it afterwards. Anonymous clones need the repository to be public; that visibility change is separate from this package. The pinned command belongs in `ai-marketplace/gemini/README.md` when that catalogue is next updated. Gemini does not use a marketplace JSON catalogue. This repository does not edit that catalogue.
+Review the installation prompt, restart Gemini and check that Public Universe and all seven skills appear. Repository installs use `gemini extensions install https://github.com/Wicked-Sick-Ltd/public-universe --ref <reviewed-tag-or-sha>`. GitHub redirects `Wicked-Sick-Ltd/solar-plugin` to that repository. Anonymous clones need the repository to be public; that visibility change is separate from this package. The pinned command belongs in `ai-marketplace/gemini/README.md` when that catalogue is next updated. Gemini does not use a marketplace JSON catalogue. This repository does not edit that catalogue.
 
 The tested Windows runtime is Gemini CLI 0.62.0 with Node 24.21.0. Node 25.6.1 produced a shutdown assertion after installation; repeat with Node 24 if you encounter that client error.
 
