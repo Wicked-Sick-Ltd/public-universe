@@ -5,7 +5,7 @@ description: >
   "social posts about what's up this month", "newsletter for PublicUniverse subscribers", "SEO content for publicuniverse.net",
   or wants publishable astronomy content built from live PublicUniverse data that links back to PublicUniverse pages.
 metadata:
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # Sky this week: content for PublicUniverse
@@ -14,7 +14,7 @@ Produce accurate, publishable content (blog post, newsletter, or social posts) t
 
 ## Client compatibility
 
-Use the connected PublicUniverse MCP server (`solar-system-db`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
+Use the connected PublicUniverse MCP server (`publicuniverse`); clients may prefix or namespace its tool names. Match the tools below to the names and argument schemas actually exposed by the client. If the connection or a required tool is unavailable, explain what cannot be checked and ask the user to connect it; do not invent live results. Read references relative to this skill's directory. If browsing or file creation is unavailable, state that limit and provide the supported part of the result.
 
 ## 1. Brief
 Confirm the following, and use the defaults if the user doesn't say:
@@ -24,7 +24,7 @@ Confirm the following, and use the defaults if the user doesn't say:
 - **Format**: blog post and 3 social posts
 - **Length**: blog about 500–700 words, newsletter about 250, social under 280 characters each
 
-## 2. Gather live data (PublicUniverse MCP `solar-system-db`)
+## 2. Gather live data (PublicUniverse MCP `publicuniverse`)
 - Planets: `get_sky_position` for each planet at 21:00 local on the first evening, plus a pre-dawn check. Note oppositions (elongation near 180°), and planets too close to the Sun (elongation under about 15°).
 - Meteor showers: `list_meteor_showers(established_only=True, active_on=<each date>)`.
 - Flybys: `find_close_approaches` for the period (max_dist_au 0.05). Pick the one or two most notable.

@@ -16,7 +16,10 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = ("docs/clients.md", "docs/openai.md", "docs/validation.md", "docs/submission.md")
+DOCS = ("docs/clients.md", "docs/openai.md", "docs/validation.md", "docs/submission.md", "docs/listings.md")
+REGISTRY_SCHEMA = "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json"
+REGISTRY_NAME = "net.publicuniverse/publicuniverse"
+REGISTRY_DESCRIPTION = "Free astronomy catalogue: solar system objects, sky positions, close approaches and more."
 SCHEMA_ROOT = "https://agent-plugins.org/schemas/1.0.0/"
 
 
@@ -120,6 +123,25 @@ def generated_files(root):
         "clients/cursor.json": json_bytes({"mcpServers": {name: {"url": server["url"]} for name, server in servers.items()}}),
         "clients/vscode.json": json_bytes({"servers": http}),
         "clients/copilot-cli.json": json_bytes({"mcpServers": {name: {**server, "tools": ["*"]} for name, server in http.items()}}),
+        ".claude-plugin/marketplace.json": json_bytes({
+            "name": plugin["name"],
+            "owner": {key: value for key, value in plugin.get("author", {"name": plugin["name"]}).items() if key in ("name", "email")},
+            "metadata": {"description": plugin["description"], "version": plugin["version"]},
+            "plugins": [{
+                "name": plugin["name"], "source": "./", "description": plugin["description"], "version": plugin["version"],
+                **{key: plugin[key] for key in ("author", "homepage", "repository", "license", "keywords") if key in plugin},
+                "category": "education",
+            }],
+        }),
+        "server.json": json_bytes({
+            "$schema": REGISTRY_SCHEMA, "name": REGISTRY_NAME,
+            "title": plugin.get("extensions", {}).get("com.openai", {}).get("interface", {}).get("displayName", plugin["name"]),
+            "description": REGISTRY_DESCRIPTION, "version": plugin["version"],
+            **({"websiteUrl": plugin["homepage"]} if "homepage" in plugin else {}),
+            "repository": {"url": plugin["repository"].removesuffix(".git"), "source": "github"},
+            "remotes": [{"type": "streamable-http", "url": server["url"]} for server in servers.values()],
+        }),
+        "clients/grok.toml": "\n".join(f'[mcp_servers.{name}]\nurl = {json.dumps(server["url"])}\n' for name, server in servers.items()).encode(),
         "clients/openai-marketplace.json": json_bytes({
             "name": "publicuniverse-local", "interface": {"displayName": "PublicUniverse local preview"},
             "plugins": [{"name": plugin["name"], "source": {"source": "url", "url": repository, "ref": "main"},
@@ -187,7 +209,7 @@ def check(root):
     for relative, content in expected.items():
         if read_file(root, relative) != content:
             raise ValidationError(f"Generated file drift: {relative}; run python3 scripts/package.py generate")
-    files = {"plugin.json", "mcp.json", "README.md", "CHANGELOG.md", "LICENSE", *DOCS, *expected, *skill_files(root)}
+    files = {"plugin.json", "mcp.json", "README.md", "CHANGELOG.md", "LICENSE", "NOTICE", *DOCS, *expected, *skill_files(root)}
     interface = canonical(root)[0].get("extensions", {}).get("com.openai", {}).get("interface", {})
     for field in ("logo", "composerIcon"):
         if field in interface:
