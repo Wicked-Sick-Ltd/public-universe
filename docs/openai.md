@@ -9,7 +9,7 @@ These instructions follow official OpenAI documentation checked on 2026-10-02. S
 This route works without publishing a plugin. Register the public Streamable HTTP server:
 
 ```sh
-codex mcp add solar-system-db --url https://api.sol.wickedsick.com/mcp
+codex mcp add publicuniverse --url https://api.sol.wickedsick.com/mcp
 codex mcp list
 ```
 
@@ -28,7 +28,7 @@ codex plugin marketplace add Wicked-Sick-Ltd/ai-marketplace --sparse .agents/plu
 codex plugin add publicuniverse@wickedsick
 ```
 
-[clients/openai-marketplace.json](../clients/openai-marketplace.json) is a standalone development example, not a second public catalog. Its `main` reference works only after the plugin change is merged; for review, replace it with the tested revision. Production catalog entries must pin the full reviewed commit SHA. The repository URL must be updated after the organisation transfer. See [submission readiness](submission.md).
+[clients/openai-marketplace.json](../clients/openai-marketplace.json) is a standalone development example, not a second public catalog. Its `main` reference works only after the plugin change is merged; for review, replace it with the tested revision. Production catalog entries must pin the full reviewed commit SHA. The repository is `https://github.com/Wicked-Sick-Ltd/publicuniverse-plugin` (renamed from `solar-plugin`; GitHub redirects the old URL). See [submission readiness](submission.md).
 
 For a fully local test, replace the entry's source with `{"source":"local","path":"./plugins/publicuniverse"}` and place the whole plugin at `plugins/publicuniverse` inside the marketplace root. Paths start with `./` and must stay inside that root. Use either the full plugin or the manual MCP/skills route to avoid duplicates.
 
@@ -39,12 +39,12 @@ For a fully local test, replace the entry's source with `{"source":"local","path
 Where your account and workspace policy allow developer mode:
 
 1. Open **Settings → Security and login → Developer mode**.
-2. Open [ChatGPT Plugins](https://chatgpt.com/plugins), choose the plus button, and name the connection **PublicUniverse**.
+2. Open [ChatGPT Plugins](https://chatgpt.com/plugins), choose the plus button, and name the connection **Public Universe**.
 3. Enter `https://api.sol.wickedsick.com/mcp` as the public MCP URL. The intended public service needs no authentication.
 4. Review the discovered tools, then start a new conversation and enable the connection from the tools menu.
 5. Ask it to retrieve Mars's catalogue record and cite its source. Verify that a tool actually ran.
 
-The official [connection and testing guide](https://developers.openai.com/plugins/deploy/connect-chatgpt) documents this flow and policy-dependent availability. A 404 during initialization can come from the edge or origin and does not establish an authentication problem. The current Cloudflare WAF issue is deferred to the new-domain migration; see the [validation record](validation.md).
+The official [connection and testing guide](https://developers.openai.com/plugins/deploy/connect-chatgpt) documents this flow and policy-dependent availability. A 404 during initialization means the `/mcp` route is not deployed on the origin yet (checked 2026-10-08: Cloudflare passes the request and the API application answers 404). It is not an authentication problem; see the [validation record](validation.md).
 
 ### Add the workflows
 

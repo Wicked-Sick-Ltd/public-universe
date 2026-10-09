@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 (unreleased)
+- Public release preparation: repository renamed to `Wicked-Sick-Ltd/publicuniverse-plugin` (GitHub redirects `solar-plugin`).
+- Rename the MCP server identifier from `solar-system-db` to `publicuniverse` in every manifest, client profile and skill. Tool names are unchanged; client tool prefixes and saved permission allowlists change.
+- Display name is now "Public Universe".
+- Licence copyright holder is Wicked Sick Limited; add NOTICE with the attribution request ("credit Wicked Sick Ltd").
+- Generate a Claude Code marketplace (`.claude-plugin/marketplace.json`) so the repository installs directly with `/plugin marketplace add`; Grok CLI reads the same files.
+- Generate an MCP Registry `server.json` and a Grok CLI profile (`clients/grok.toml`).
+- Install steps for Claude Code, Cursor, Codex, ChatGPT, Gemini CLI, GitHub Copilot, Grok and generic MCP clients; listing copy for public directories in `docs/listings.md`.
+- Record the 2026-10-08 live check: the MCP 404 comes from the origin, not the Cloudflare WAF.
+
 ## 0.3.0 (unreleased)
 - Rename the package to `publicuniverse` and the audit skill to `publicuniverse-data-audit`.
 - Use PublicUniverse branding and `https://publicuniverse.net` for website links.

@@ -40,9 +40,17 @@ Verified locally on 2026-10-02:
 
 ## Live MCP check
 
+### 2026-10-08 (supersedes the WAF diagnosis below)
+
+`POST https://api.sol.wickedsick.com/mcp` with a JSON-RPC `initialize` body returned HTTP 404 `{"detail":"Not Found"}` for browser, curl, AI-agent and MCP-client user agents. Response headers carried no `cf-mitigated` header and no challenge page. Cloudflare analytics for the same requests show the edge passing them to the origin (the zone's "Solar API + MCP" skip rule matched) and the origin itself answering 404. The REST API on the same host (`/healthz`, `/openapi.json`, `/api/v1/stats`, `/api/v1/objects/planet-mars`) returned 200 with live data to every user agent tested. So the MCP failure is origin routing, not the Cloudflare WAF: the `/mcp` path reaches the REST application, which has no such route. Deploying the MCP service and proxy location from `solar-system-db` (`deploy/php01/MCP-ROLLOUT.md`, merged in backend PR #47) is the remaining step.
+
+One edge rule does affect API clients: Browser Integrity Check returns Cloudflare error 1010 (HTTP 403) to the default `Python-urllib/*` user agent on the API and website hosts. Other script user agents (`python-requests`, `Go-http-client`, `node`, `axios`, curl, MCP clients) are allowed.
+
+### Earlier record
+
 The existing public endpoint `https://api.sol.wickedsick.com/mcp` returned HTTP 404 with `{"detail":"Not Found"}` on 2026-10-02 at approximately 21:25 UTC. A Python MCP SDK initialization also failed with `Session terminated`. No tool invocation completed. This is an outstanding service acceptance issue, not a successful connection test.
 
-The trailing-slash `/mcp/` also returned 404, while `/healthz` and `/openapi.json` served the REST API successfully. The backend's checked-in php01 systemd unit launches the REST API alone; its separate Docker/Caddy example routes MCP to a different service on port 8002. Those repository templates did not establish the deployed configuration or explain the public response. On 2026-10-03 Craig identified Cloudflare WAF rules as the issue and deferred the fix to the new-domain migration. This supersedes the earlier origin-routing hypothesis. Keep the existing documented URL until the replacement endpoint is confirmed; repeat initialization and live client acceptance after the domain/WAF work.
+The trailing-slash `/mcp/` also returned 404, while `/healthz` and `/openapi.json` served the REST API successfully. The backend's checked-in php01 systemd unit launches the REST API alone; its separate Docker/Caddy example routes MCP to a different service on port 8002. Those repository templates did not establish the deployed configuration or explain the public response. On 2026-10-03 the issue was attributed to Cloudflare WAF rules; the 2026-10-08 check above found the edge passing requests through and the origin answering 404, which restores the origin-routing explanation. Keep the existing documented URL until the replacement endpoint is confirmed; repeat initialization and live client acceptance after the domain/WAF work.
 
 [Backend PR #47](https://github.com/Wicked-Sick-Ltd/solar-system-db/pull/47) includes transport metadata/security improvements and optional origin service/proxy templates. It is not a required remedy for the WAF issue. Do not install or replace a service based on the 404 alone: check the existing origin after resolving the edge configuration, and use those templates only if a remaining origin gap is established. No WAF or origin changes are part of the current plugin work.
 
@@ -52,7 +60,7 @@ Repeat a bounded initialization check after the endpoint has been restored:
 curl --max-time 20 -i https://api.sol.wickedsick.com/mcp \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
-  --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"solar-plugin-check","version":"0.2.0"}}}'
+  --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"publicuniverse-check","version":"0.4.0"}}}'
 ```
 
 A healthy result includes negotiated protocol/server capabilities, not just HTTP 200. Then use an MCP client to complete `notifications/initialized`, list tools and call `get_stats` and `get_object` with valid arguments. Follow the returned session/protocol headers where applicable. Check pagination and read-only annotations rather than assuming all advertised tools have the same contract.

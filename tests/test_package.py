@@ -29,7 +29,7 @@ class PackageTests(unittest.TestCase):
             "$schema": package.SCHEMA_ROOT + "mcp.schema.json",
             "mcpServers": {"solar-system-db": {"type": "streamable-http", "url": "https://example.org/mcp"}},
         }))
-        for relative in ("README.md", "LICENSE", "CHANGELOG.md", *package.DOCS):
+        for relative in ("README.md", "LICENSE", "NOTICE", "CHANGELOG.md", *package.DOCS):
             self.write(relative, "Public documentation\n")
         self.write("skills/example/SKILL.md", '---\nname: example\ndescription: >\n  Explain astronomy with public data.\nmetadata:\n  version: "0.1.0"\n---\nRead `references/data-caveats.md`.\n')
         self.write("skills/example/references/data-caveats.md", "Scientific caveats\n")
