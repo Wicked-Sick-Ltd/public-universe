@@ -2,6 +2,24 @@
 
 All notable changes to this plugin are documented here.
 
+## 0.5.0 (2026-10-09)
+
+### Changed
+- **Breaking for installs of 0.4.0:** the plugin id is now `public-universe` (it was `publicuniverse`). Claude skill commands are `/public-universe:…`. Remove the older plugin before installing this one.
+- The MCP connection name stays `publicuniverse`, so saved MCP configs and tool prefixes from 0.4.0 keep working. Tool names are unchanged. The audit skill stays `publicuniverse-data-audit`.
+- Repository links and install commands use `https://github.com/Wicked-Sick-Ltd/public-universe`. `Wicked-Sick-Ltd/solar-plugin` remains this repository until that rename; GitHub will redirect the old name afterwards. The docs no longer tell anyone to clone `publicuniverse-plugin`, which 404s. The 0.4.0 metadata below recorded that incorrect path; it is history.
+- The unpublished MCP Registry id stays `net.publicuniverse/publicuniverse`. Its description now mentions exoplanets and the galaxy map.
+
+### Added
+- User docs: README quick start, what the plugin does, install steps for each supported client, [MCP tool reference](docs/tools.md) for the 33 live tools, and how to suggest a feature (`https://publicuniverse.net/feedback` once that page is deployed, plus GitHub issues).
+- Validation note for 9 October 2026: `https://api.sol.wickedsick.com/mcp` answered `initialize` and listed 33 read-only tools.
+
+### Known limitations
+- Repository visibility is unchanged (still internal). This release does not make it public and does not submit any marketplace or directory.
+- `Wicked-Sick-Ltd/ai-marketplace` still lists `publicuniverse` against `publicuniverse-plugin`. That catalogue entry does not resolve. Update it separately.
+- `https://api.publicuniverse.net/mcp` is still not the packaged URL.
+- `https://publicuniverse.net/feedback` returned HTTP 404 on 2026-10-09.
+
 ## 0.4.0 (2026-10-09)
 
 First public release as **Public Universe** (`publicuniverse`). It also ships the

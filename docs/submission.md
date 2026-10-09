@@ -4,23 +4,23 @@ Release candidate: 0.4.0. The package is prepared for review, not approved for p
 
 ## Identity and migration
 
-- Package and client namespace: `publicuniverse`; display name: Public Universe.
-- Repository: `Wicked-Sick-Ltd/publicuniverse-plugin` (rename of `solar-plugin`; GitHub keeps redirects from the old name for web, API and git URLs).
+- Package name: `public-universe` (0.5.0). Display name: Public Universe. The 0.4.0 id was `publicuniverse`.
+- MCP connection name: `publicuniverse` (was `solar-system-db`). Skills refer to that connection name. Tool names are unchanged. The unpublished MCP Registry id stays `net.publicuniverse/publicuniverse`.
+- Repository: `Wicked-Sick-Ltd/public-universe`. Until the rename from `Wicked-Sick-Ltd/solar-plugin` finishes, that old name is this repository; GitHub will redirect it afterwards. `publicuniverse-plugin` is not this repository; links that use it 404.
 - Website: `https://publicuniverse.net`, matching the website repository's canonical deployment configuration.
 - Audit skill: `publicuniverse-data-audit` replaces `solar-data-audit`. The other six skill names stay the same.
-- MCP identifier: `publicuniverse` from 0.4.0 (was `solar-system-db`). Skills refer to the new identifier; tool names are unchanged.
-- MCP URL: retain `https://api.sol.wickedsick.com/mcp` until the replacement is confirmed. It still returned 404 on 2026-10-08 (origin response, not a Cloudflare block); this blocks live acceptance on every host.
-- Public catalog: `Wicked-Sick-Ltd/ai-marketplace`. Its Claude, Codex and Copilot indexes pin the plugin source revision; Gemini has an installation guide. Cursor imports the plugin source repository directly because this index does not vendor plugin directories.
+- MCP URL: `https://api.sol.wickedsick.com/mcp`. On 9 October 2026 `initialize` succeeded and `tools/list` returned 33 tools. Keep this URL until `https://api.publicuniverse.net/mcp` is confirmed. See [tools.md](tools.md).
+- Public catalogue: `Wicked-Sick-Ltd/ai-marketplace` still pins plugin id `publicuniverse` to `publicuniverse-plugin` at an older SHA. That source does not resolve. Update the catalogue separately. This package does not submit it, and it does not change repository visibility.
 
-Existing users should disable/remove the old `solar` plugin before enabling `publicuniverse`, using their client's plugin manager. Update explicit `/solar:…` invocations to `/publicuniverse:…` on Claude and any copied audit-skill directory after comparing local edits. Do not install both a full plugin and its standalone MCP profile, or overwrite unrelated client configuration.
+Existing users should disable the old `solar` plugin and the 0.4.0 `publicuniverse` plugin before enabling `public-universe`. On Claude, `/solar:…` and `/publicuniverse:…` become `/public-universe:…`. Saved MCP configs that already use the connection name `publicuniverse` can stay. Do not install both a full plugin and its standalone MCP profile, or overwrite unrelated client configuration.
 
 ## Repository and domain rollout
 
-1. Rename the repository to `Wicked-Sick-Ltd/publicuniverse-plugin` (decision of 2026-10-08; a later transfer to the `public-universe` organisation remains possible and also keeps redirects).
-2. Review the repository and its history for material unsuitable for public release; verify destination permissions. Make it public only after the transfer is complete.
-3. Update `plugin.json.repository`, regenerate profiles and update every catalog source URL to the confirmed destination. Pin the reviewed package commit in all remote listings and the Gemini command.
-4. Complete the website/domain and WAF rollout with the service owner. Update root `mcp.json` only with the confirmed endpoint and regenerate client profiles.
-5. Repeat MCP initialization, tool discovery and representative read-only calls, then the client acceptance scenarios. Merge the catalog PR only when its source is anonymously accessible and live acceptance passes.
+1. Rename the GitHub repository from `Wicked-Sick-Ltd/solar-plugin` to `Wicked-Sick-Ltd/public-universe`. GitHub will redirect the old name for web, API and git URLs. Do not use `publicuniverse-plugin`.
+2. Leave visibility as it is. This package does not make the repository public and does not submit it to a directory. A later public release still needs a review of history and a separate visibility decision.
+3. `plugin.json` now records `https://github.com/Wicked-Sick-Ltd/public-universe`, and `generate` rewrites the client profiles from that field. Pin the reviewed commit when a catalogue entry is next updated. That catalogue change is not part of this package.
+4. Keep root `mcp.json` on `https://api.sol.wickedsick.com/mcp` until `https://api.publicuniverse.net/mcp` is confirmed, then regenerate client profiles.
+5. Repeat client acceptance after any visibility change. The 9 October 2026 MCP check is recorded in [validation.md](validation.md). Do not merge a catalogue pull request while its source URL 404s.
 
 The generated ZIP and `.plugin` contain the same allowlisted files; neither includes Git history, credentials, development tests or unrelated local files. The icon is reused from the website's existing favicon.
 

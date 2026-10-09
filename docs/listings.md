@@ -6,12 +6,16 @@ Draft text for public directories. **Nothing here has been submitted.** Submit o
 
 | Field | Value |
 | --- | --- |
-| Name / id | Public Universe / `publicuniverse` |
+| Name / id | Public Universe / `public-universe` |
+| MCP connection name | `publicuniverse` (unchanged so existing client configs keep working) |
+| MCP Registry id | `net.publicuniverse/publicuniverse` (unpublished; not the plugin id) |
 | Publisher | Wicked Sick Ltd (Wicked Sick Limited), hello@wickedsick.com |
 | Website | https://publicuniverse.net |
-| Repository | https://github.com/Wicked-Sick-Ltd/publicuniverse-plugin |
+| Repository | https://github.com/Wicked-Sick-Ltd/public-universe |
 | Licence | MIT (please credit Wicked Sick Ltd; see NOTICE) |
-| MCP endpoint | `https://api.sol.wickedsick.com/mcp` (Streamable HTTP, no auth); planned `https://api.publicuniverse.net/mcp` |
+| MCP endpoint | `https://api.sol.wickedsick.com/mcp` (Streamable HTTP, no auth, 33 tools on 2026-10-09); planned `https://api.publicuniverse.net/mcp` |
+| REST docs | https://api.sol.wickedsick.com/docs |
+| Tool reference | [tools.md](tools.md) |
 | Privacy policy | https://publicuniverse.net/privacy |
 | Icon | `assets/icon.svg` |
 | Category | Education (secondary: Science, Research) |
@@ -19,11 +23,11 @@ Draft text for public directories. **Nothing here has been submitted.** Submit o
 
 **One-liner (80 characters or fewer):** Free astronomy data and lesson-ready workflows for every AI agent.
 
-**Short description (200 characters or fewer):** Explore 1.5 million solar system objects, plan a night's stargazing, build UK school lessons and fact-check space claims, using live catalogue data from the free Public Universe service.
+**Short description (200 characters or fewer):** Explore about 1.6 million solar-system objects, plan a night's stargazing, build UK school lessons and fact-check space claims, using live catalogue data from the free Public Universe service.
 
 **Long description:**
 
-> Public Universe is a free, pro bono astronomy service from Wicked Sick Ltd. This plugin connects your agent to its public MCP server (no API key) and adds seven workflows: plan what to see tonight from any town, explain any planet, moon, asteroid or comet at a chosen reading level, build UK key-stage lessons and worksheets with live values, fact-check astronomy claims, track upcoming asteroid and comet close approaches, draft a sourced weekly sky roundup, and audit catalogue data against official sources. Data comes from NASA/JPL, the IAU Minor Planet Center and other public catalogues, with sources, units and retrieval dates kept in every answer. Read-only: it never writes data or controls telescopes. Astronomy, not astrology.
+> Public Universe is a free, pro bono astronomy service from Wicked Sick Ltd. This plugin connects your agent to its public MCP server (no API key) and adds seven workflows: plan what to see tonight from any town, explain any planet, moon, asteroid or comet at a chosen reading level, build UK key-stage lessons and worksheets with live values, fact-check astronomy claims, track upcoming asteroid and comet close approaches, draft a sourced weekly sky roundup, and audit catalogue data against official sources. The same server lists NASA confirmed exoplanets and a galaxy map of host stars with measured distances. Data comes from NASA/JPL, the IAU Minor Planet Center and other public catalogues, with sources, units and retrieval dates kept in every answer. Read-only: it never writes data or controls telescopes. Astronomy, not astrology.
 
 **Example prompts:** "What can I see tonight from Romsey?" / "Explain Saturn to a ten-year-old using live catalogue data." / "Make a Year 5 worksheet about the planets." / "Is Venus's day really longer than its year?" / "Which asteroids pass close to Earth this month?"
 
@@ -31,8 +35,9 @@ Draft text for public directories. **Nothing here has been submitted.** Submit o
 
 Submit the public repository URL through Anthropic's plugin directory submission form. The repository root has `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; `claude plugin validate .` should pass.
 
-- Plugin name: `publicuniverse`; marketplace name: `publicuniverse`
-- Install test: `/plugin marketplace add https://github.com/Wicked-Sick-Ltd/publicuniverse-plugin.git` then `/plugin install publicuniverse@publicuniverse`
+- Plugin name: `public-universe`; marketplace name: `public-universe`
+- Install test: `/plugin marketplace add https://github.com/Wicked-Sick-Ltd/public-universe.git` then `/plugin install public-universe@public-universe`
+- Do not submit while the repository is internal. This file is draft copy only.
 - Components: 7 skills, 1 remote HTTP MCP server; no hooks, commands, binaries or credentials
 - Use the short and long descriptions above.
 
@@ -53,7 +58,7 @@ Alternative without DNS: change the name to `io.github.wicked-sick-ltd/publicuni
 
 ## 4. Smithery
 
-Add an existing remote server at https://smithery.ai/new using the MCP URL (no authentication). Display name: Public Universe. Description: short description above. Smithery scans the tool list on submission, so do this after the endpoint works.
+Add an existing remote server at https://smithery.ai/new using the MCP URL (no authentication). Display name: Public Universe. Description: short description above. The endpoint answered `tools/list` with 33 tools on 9 October 2026. Do not submit from this change.
 
 ## 5. OpenAI / Codex plugin directory
 
@@ -61,8 +66,8 @@ Follow https://developers.openai.com/plugins/deploy/submission. The root `plugin
 
 ## 6. Gemini CLI extensions gallery
 
-The gallery indexes public GitHub repositories that contain `gemini-extension.json`. Add the repository topic `gemini-cli-extension` once public and check the listing at https://geminicli.com/extensions. Install line: `gemini extensions install https://github.com/Wicked-Sick-Ltd/publicuniverse-plugin`.
+The gallery indexes public GitHub repositories that contain `gemini-extension.json`. Add the repository topic `gemini-cli-extension` once public and check the listing at https://geminicli.com/extensions. Install line: `gemini extensions install https://github.com/Wicked-Sick-Ltd/public-universe`. Do not submit from this change.
 
 ## 7. Wicked Sick catalogue (`Wicked-Sick-Ltd/ai-marketplace`)
 
-Update the Claude, Codex and Copilot entries to the renamed repository and the merged 0.4.0 commit SHA, refresh the Gemini command, and add the Cursor entry (a vendored copy of this package at `plugins/publicuniverse/`, because Cursor team marketplaces resolve sources inside the catalogue repository).
+The catalogue entry still names `publicuniverse` and clones a `publicuniverse-plugin` path, which 404s. When that repository is next updated, point Claude, Codex and Copilot at plugin id `public-universe`, source `https://github.com/Wicked-Sick-Ltd/public-universe`, and the merged 0.5.0 commit SHA. Refresh the Gemini command to the same GitHub path. Cursor team marketplaces need a vendored copy inside the catalogue repository. Do that work in `ai-marketplace`. This package does not submit it.

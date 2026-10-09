@@ -1,6 +1,16 @@
 # Multi-vendor validation
 
-Development acceptance record, updated 2026-10-05 for PublicUniverse 0.3.0. Package checks and live service checks are separate.
+Development acceptance record. Package checks and live service checks are separate.
+
+## Current service status (2026-10-09)
+
+Plugin id `public-universe` 0.5.0. MCP connection name `publicuniverse`. URL `https://api.sol.wickedsick.com/mcp`.
+
+`POST` `initialize` (protocol `2025-03-26`) returned HTTP 200 with a Streamable HTTP session (`mcp-session-id`). After `notifications/initialized`, `tools/list` returned 33 tools. Every tool carried `readOnlyHint: true`. The list includes `list_exoplanets`, `get_exoplanet`, `get_exoplanet_host` and `galaxy_map`. The server's own `serverInfo` was `solar-system-db` 1.30.0; this plugin still connects under the name `publicuniverse`. `get_stats` in the same session reported 1,575,811 solar-system objects and a build that finished at 2026-10-09T07:53:21Z. REST documentation at `https://api.sol.wickedsick.com/docs` returned HTTP 200.
+
+`https://publicuniverse.net/feedback` returned HTTP 404 on the same day. The user docs point at that URL for when the form is deployed, and at GitHub issues in the meantime.
+
+The notes below from 2 to 8 October record an earlier origin 404. They are history. `https://api.publicuniverse.net/mcp` is still not the URL in this package. No directory was submitted, and repository visibility was not changed.
 
 ## PublicUniverse compatibility results (2026-10-05)
 

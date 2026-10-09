@@ -1,14 +1,14 @@
 {
-  "name": "publicuniverse-local",
+  "name": "public-universe-local",
   "interface": {
-    "displayName": "PublicUniverse local preview"
+    "displayName": "Public Universe local preview"
   },
   "plugins": [
     {
-      "name": "publicuniverse",
+      "name": "public-universe",
       "source": {
         "source": "url",
-        "url": "https://github.com/Wicked-Sick-Ltd/publicuniverse-plugin.git",
+        "url": "https://github.com/Wicked-Sick-Ltd/public-universe.git",
         "ref": "main"
       },
       "policy": {

@@ -1,6 +1,6 @@
 # ChatGPT and Codex
 
-These instructions follow official OpenAI documentation checked on 2026-10-02. Start with the [connection status](validation.md): a valid plugin package does not establish that the public server is reachable.
+These instructions follow official OpenAI documentation checked on 2026-10-02. The public MCP server at `https://api.sol.wickedsick.com/mcp` answered `initialize` on 9 October 2026 and advertised 33 tools ([tool reference](tools.md), [validation record](validation.md)). A valid plugin package is still a separate check from a live tool call in your account.
 
 ## Codex
 
@@ -21,16 +21,13 @@ Copy each desired **whole directory** from `skills/` into your project's `.agent
 
 Current Codex supports root `plugin.json`, `mcp.json` and `skills/`. The [OpenAI package guide](https://developers.openai.com/plugins/build/plugins) describes local and Git-backed marketplaces.
 
-The public catalog is [Wicked-Sick-Ltd/ai-marketplace](https://github.com/Wicked-Sick-Ltd/ai-marketplace). Once its PublicUniverse entry is merged and the source repository is public:
+Install the tools and the skill folders with the commands above. That route does not depend on a catalogue.
 
-```sh
-codex plugin marketplace add Wicked-Sick-Ltd/ai-marketplace --sparse .agents/plugins
-codex plugin add publicuniverse@wickedsick
-```
+[Wicked-Sick-Ltd/ai-marketplace](https://github.com/Wicked-Sick-Ltd/ai-marketplace) still lists this plugin as `publicuniverse` and points at `Wicked-Sick-Ltd/publicuniverse-plugin`, which is not this repository and does not resolve. Do not run `publicuniverse@wickedsick` against that entry. This package does not submit a catalogue change. When that catalogue is updated, the plugin id to publish is `public-universe` and the source is `https://github.com/Wicked-Sick-Ltd/public-universe`.
 
-[clients/openai-marketplace.json](../clients/openai-marketplace.json) is a standalone development example, not a second public catalog. Its `main` reference works only after the plugin change is merged; for review, replace it with the tested revision. Production catalog entries must pin the full reviewed commit SHA. The repository is `https://github.com/Wicked-Sick-Ltd/publicuniverse-plugin` (renamed from `solar-plugin`; GitHub redirects the old URL). See [submission readiness](submission.md).
+[clients/openai-marketplace.json](../clients/openai-marketplace.json) is a standalone development example, not a second public catalogue. It names the plugin `public-universe` and points at `https://github.com/Wicked-Sick-Ltd/public-universe.git`. Its `main` reference works only after this change is merged; for review, replace it with the tested revision. Production catalogue entries must pin the full reviewed commit SHA. `Wicked-Sick-Ltd/solar-plugin` is this repository until the rename; GitHub will redirect that name to `Wicked-Sick-Ltd/public-universe`. See [submission readiness](submission.md).
 
-For a fully local test, replace the entry's source with `{"source":"local","path":"./plugins/publicuniverse"}` and place the whole plugin at `plugins/publicuniverse` inside the marketplace root. Paths start with `./` and must stay inside that root. Use either the full plugin or the manual MCP/skills route to avoid duplicates.
+For a fully local test, replace the entry's source with `{"source":"local","path":"./plugins/public-universe"}` and place the whole plugin at `plugins/public-universe` inside the marketplace root. Paths start with `./` and must stay inside that root. Use either the full plugin or the manual MCP/skills route to avoid duplicates.
 
 ## ChatGPT
 
@@ -44,7 +41,7 @@ Where your account and workspace policy allow developer mode:
 4. Review the discovered tools, then start a new conversation and enable the connection from the tools menu.
 5. Ask it to retrieve Mars's catalogue record and cite its source. Verify that a tool actually ran.
 
-The official [connection and testing guide](https://developers.openai.com/plugins/deploy/connect-chatgpt) documents this flow and policy-dependent availability. A 404 during initialization means the `/mcp` route is not deployed on the origin yet (checked 2026-10-08: Cloudflare passes the request and the API application answers 404). It is not an authentication problem; see the [validation record](validation.md).
+The official [connection and testing guide](https://developers.openai.com/plugins/deploy/connect-chatgpt) documents this flow and policy-dependent availability. On 9 October 2026 the URL completed MCP initialization. If a later check fails, see the [validation record](validation.md) before treating it as an authentication problem. There is no API key.
 
 ### Add the workflows
 

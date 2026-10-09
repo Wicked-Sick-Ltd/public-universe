@@ -24,5 +24,5 @@ jobs:
       - run: python scripts/package.py build
       - uses: actions/upload-artifact@v4
         with:
-          name: publicuniverse-plugin-${{ matrix.os }}-python-${{ matrix.python-version }}
+          name: public-universe-${{ matrix.os }}-python-${{ matrix.python-version }}
           path: dist/*

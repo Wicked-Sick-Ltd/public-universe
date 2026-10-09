@@ -227,5 +227,25 @@ class PackageTests(unittest.TestCase):
             package.build(self.root)
 
 
+    def test_shipped_plugin_identity_and_repository_links(self):
+        plugin = json.loads((REPO / "plugin.json").read_text())
+        self.assertEqual(plugin["name"], "public-universe")
+        self.assertEqual(plugin["repository"], "https://github.com/Wicked-Sick-Ltd/public-universe")
+        mcp = json.loads((REPO / "mcp.json").read_text())
+        self.assertEqual(set(mcp["mcpServers"]), {"publicuniverse"})
+        tools = (REPO / "docs/tools.md").read_text()
+        for name in ("list_exoplanets", "get_exoplanet", "get_exoplanet_host", "galaxy_map"):
+            self.assertIn(name, tools)
+        self.assertIn("https://api.sol.wickedsick.com/mcp", tools)
+        banned = "github.com/Wicked-Sick-Ltd/publicuniverse-plugin"
+        for path in REPO.rglob("*"):
+            if not path.is_file() or ".git" in path.parts or path.suffix.lower() not in {".md", ".json", ".yml", ".yaml", ".toml"}:
+                continue
+            if path.name == "CHANGELOG.md":
+                continue
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn(banned, text, path.relative_to(REPO).as_posix())
+
+
 if __name__ == "__main__":
     unittest.main()

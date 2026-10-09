@@ -16,10 +16,10 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = ("docs/clients.md", "docs/openai.md", "docs/validation.md", "docs/submission.md", "docs/listings.md")
+DOCS = ("docs/clients.md", "docs/openai.md", "docs/tools.md", "docs/validation.md", "docs/submission.md", "docs/listings.md")
 REGISTRY_SCHEMA = "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json"
 REGISTRY_NAME = "net.publicuniverse/publicuniverse"
-REGISTRY_DESCRIPTION = "Free astronomy catalogue: solar system objects, sky positions, close approaches and more."
+REGISTRY_DESCRIPTION = "Free astronomy catalogue: solar system objects, sky positions, close approaches, exoplanets and a galaxy map of host stars."
 SCHEMA_ROOT = "https://agent-plugins.org/schemas/1.0.0/"
 
 
@@ -143,7 +143,7 @@ def generated_files(root):
         }),
         "clients/grok.toml": "\n".join(f'[mcp_servers.{name}]\nurl = {json.dumps(server["url"])}\n' for name, server in servers.items()).encode(),
         "clients/openai-marketplace.json": json_bytes({
-            "name": "publicuniverse-local", "interface": {"displayName": "PublicUniverse local preview"},
+            "name": "public-universe-local", "interface": {"displayName": "Public Universe local preview"},
             "plugins": [{"name": plugin["name"], "source": {"source": "url", "url": repository, "ref": "main"},
                          "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Education"}],
         }),
