@@ -2,6 +2,12 @@
 
 All notable changes to this plugin are documented here.
 
+## [Unreleased]
+
+### Fixed
+
+- Repository metadata, catalogue URLs and docs now point at `Wicked-Sick-Ltd/public-universe`, the actual name after the rename from `solar-plugin` (the interim `publicuniverse-plugin` name was never created and returned 404).
+
 ## 0.4.0 (2026-10-09)
 
 First public release as **Public Universe** (`publicuniverse`). It also ships the
