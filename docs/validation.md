@@ -40,6 +40,10 @@ Verified locally on 2026-10-02:
 
 ## Live MCP check
 
+### 2026-10-11 (supersedes the 2026-10-08 result below)
+
+`POST https://api.sol.wickedsick.com/mcp` `initialize` returned HTTP 200 (`text/event-stream`) with an `mcp-session-id`, protocol `2025-03-26` and serverInfo `solar-system-db` 1.30.0. `notifications/initialized` returned 202 and `tools/list` returned 33 tools, all annotated `readOnlyHint: true`, `destructiveHint: false`. No authentication is required; `/.well-known/oauth-protected-resource` returns 404 (expected for an unauthenticated server). Tool calls and client acceptance scenarios were not run in this check. Note the server still reports its name as `solar-system-db`, not `publicuniverse`.
+
 ### 2026-10-08 (supersedes the WAF diagnosis below)
 
 `POST https://api.sol.wickedsick.com/mcp` with a JSON-RPC `initialize` body returned HTTP 404 `{"detail":"Not Found"}` for browser, curl, AI-agent and MCP-client user agents. Response headers carried no `cf-mitigated` header and no challenge page. Cloudflare analytics for the same requests show the edge passing them to the origin (the zone's "Solar API + MCP" skip rule matched) and the origin itself answering 404. The REST API on the same host (`/healthz`, `/openapi.json`, `/api/v1/stats`, `/api/v1/objects/planet-mars`) returned 200 with live data to every user agent tested. So the MCP failure is origin routing, not the Cloudflare WAF: the `/mcp` path reaches the REST application, which has no such route. Deploying the MCP service and proxy location from `solar-system-db` (`deploy/php01/MCP-ROLLOUT.md`, merged in backend PR #47) is the remaining step.
