@@ -4,9 +4,16 @@ All notable changes to this plugin are documented here.
 
 ## [Unreleased]
 
-### Fixed
+## 0.4.1 (2026-10-16)
 
-- Repository metadata, catalogue URLs and docs now point at `Wicked-Sick-Ltd/public-universe`, the actual name after the rename from `solar-plugin` (the interim `publicuniverse-plugin` name was never created and returned 404).
+### Added
+
+- Cursor marketplace manifest (`.cursor-plugin/plugin.json`), generated from `plugin.json` with category `education`, logo, keywords and MCP/skills paths.
+
+### Changed
+
+- README and submission docs reflect a live public MCP endpoint (verified 2026-10-16) and a public `Wicked-Sick-Ltd/public-universe` repository.
+- [validation.md](docs/validation.md) records full initialize, tool-list and sample tool-call evidence.
 
 ## 0.4.0 (2026-10-09)
 
