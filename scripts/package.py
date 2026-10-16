@@ -105,6 +105,32 @@ def json_bytes(value):
     return (json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode()
 
 
+def cursor_plugin_manifest(plugin):
+    interface = plugin.get("extensions", {}).get("com.openai", {}).get("interface", {})
+    author = plugin.get("author", {})
+    logo = interface.get("logo", "./assets/icon.svg")
+    if isinstance(logo, str):
+        logo = logo.removeprefix("./")
+    manifest = {
+        "name": plugin["name"],
+        "displayName": interface.get("displayName", "Public Universe"),
+        "version": plugin["version"],
+        "description": plugin["description"],
+        "author": {key: author[key] for key in ("name", "email", "url") if key in author},
+        "repository": plugin["repository"],
+        "license": plugin["license"],
+        "logo": logo,
+        "keywords": plugin.get("keywords", []),
+        "category": "education",
+        "tags": ["astronomy", "education", "mcp", "science", "stargazing"],
+        "skills": "./skills/",
+        "mcpServers": "./.mcp.json",
+    }
+    if "homepage" in plugin:
+        manifest["homepage"] = plugin["homepage"]
+    return manifest
+
+
 def generated_files(root):
     plugin, servers = canonical(root)
     http = {name: {"type": "http", "url": server["url"]} for name, server in servers.items()}
@@ -147,6 +173,7 @@ def generated_files(root):
             "plugins": [{"name": plugin["name"], "source": {"source": "url", "url": repository, "ref": "main"},
                          "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Education"}],
         }),
+        ".cursor-plugin/plugin.json": json_bytes(cursor_plugin_manifest(plugin)),
     }
 
 
