@@ -1,0 +1,36 @@
+{
+  "name": "publicuniverse",
+  "version": "0.4.1",
+  "description": "Public Universe astronomy tools and skills: explore catalogue data, plan stargazing, explain objects, build lessons and check space facts using a free public MCP server.",
+  "author": {
+    "name": "Wicked Sick Ltd",
+    "email": "hello@wickedsick.com",
+    "url": "https://wickedsick.com"
+  },
+  "repository": "https://github.com/Wicked-Sick-Ltd/public-universe",
+  "license": "MIT",
+  "keywords": [
+    "astronomy",
+    "solar-system",
+    "education",
+    "nasa",
+    "jpl",
+    "stargazing",
+    "mcp",
+    "public-universe",
+    "publicuniverse",
+    "agent-skills"
+  ],
+  "skills": "./skills",
+  "hooks": {},
+  "mcpServers": {
+    "publicuniverse": {
+      "type": "http",
+      "url": "https://api.sol.wickedsick.com/mcp",
+      "tools": [
+        "*"
+      ]
+    }
+  },
+  "homepage": "https://publicuniverse.net"
+}
