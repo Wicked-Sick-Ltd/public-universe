@@ -131,22 +131,66 @@ def cursor_plugin_manifest(plugin):
     return manifest
 
 
+def codex_plugin_manifest(plugin):
+    interface = plugin.get("extensions", {}).get("com.openai", {}).get("interface", {})
+    author = plugin.get("author", {})
+    manifest = {
+        "name": plugin["name"],
+        "version": plugin["version"],
+        "description": plugin["description"],
+        "author": {key: author[key] for key in ("name", "email", "url") if key in author},
+        "repository": plugin["repository"],
+        "license": plugin["license"],
+        "keywords": plugin.get("keywords", []),
+        "skills": "./skills/",
+        "mcpServers": "./.mcp.json",
+        "interface": interface,
+    }
+    if "homepage" in plugin:
+        manifest["homepage"] = plugin["homepage"]
+    return manifest
+
+
+def copilot_plugin_manifest(plugin, http_servers):
+    author = plugin.get("author", {})
+    manifest = {
+        "name": plugin["name"],
+        "version": plugin["version"],
+        "description": plugin["description"],
+        "author": {key: author[key] for key in ("name", "email", "url") if key in author},
+        "repository": plugin["repository"],
+        "license": plugin["license"],
+        "keywords": plugin.get("keywords", []),
+        "skills": "./skills",
+        "hooks": {},
+        "mcpServers": {name: {**server, "tools": ["*"]} for name, server in http_servers.items()},
+    }
+    if "homepage" in plugin:
+        manifest["homepage"] = plugin["homepage"]
+    return manifest
+
+
 def generated_files(root):
     plugin, servers = canonical(root)
     http = {name: {"type": "http", "url": server["url"]} for name, server in servers.items()}
+    url_only = {name: {"url": server["url"]} for name, server in servers.items()}
     codex = "\n".join(f'[mcp_servers.{name}]\nurl = {json.dumps(server["url"])}\n' for name, server in servers.items())
     tomllib.loads(codex)
     repository = plugin["repository"].removesuffix(".git") + ".git"
     return {
         ".claude-plugin/plugin.json": json_bytes({key: value for key, value in plugin.items() if key not in ("$schema", "extensions")}),
+        ".codex-plugin/plugin.json": json_bytes(codex_plugin_manifest(plugin)),
+        ".plugin/plugin.json": json_bytes(copilot_plugin_manifest(plugin, http)),
         ".mcp.json": json_bytes({"mcpServers": http}),
+        "mcp_config.json": json_bytes({"mcpServers": url_only}),
         "gemini-extension.json": json_bytes({
             "name": plugin["name"], "version": plugin["version"],
             "mcpServers": {name: {"httpUrl": server["url"]} for name, server in servers.items()},
         }),
         "clients/claude.json": json_bytes({"mcpServers": http}),
         "clients/codex.toml": codex.encode(),
-        "clients/cursor.json": json_bytes({"mcpServers": {name: {"url": server["url"]} for name, server in servers.items()}}),
+        "clients/cursor.json": json_bytes({"mcpServers": url_only}),
+        "clients/gemini.json": json_bytes({"mcpServers": url_only}),
         "clients/vscode.json": json_bytes({"servers": http}),
         "clients/copilot-cli.json": json_bytes({"mcpServers": {name: {**server, "tools": ["*"]} for name, server in http.items()}}),
         ".claude-plugin/marketplace.json": json_bytes({

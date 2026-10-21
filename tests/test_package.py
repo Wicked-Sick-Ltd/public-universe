@@ -98,8 +98,12 @@ class PackageTests(unittest.TestCase):
         expected_url = "https://example.org/mcp"
         self.assertEqual(read(".mcp.json"), read("clients/claude.json"))
         self.assertEqual(read("clients/cursor.json")["mcpServers"]["solar-system-db"], {"url": expected_url})
+        self.assertEqual(read("clients/gemini.json")["mcpServers"]["solar-system-db"], {"url": expected_url})
+        self.assertEqual(read("mcp_config.json")["mcpServers"]["solar-system-db"], {"url": expected_url})
         self.assertEqual(read("clients/vscode.json")["servers"]["solar-system-db"], {"type": "http", "url": expected_url})
         self.assertEqual(read("clients/copilot-cli.json")["mcpServers"]["solar-system-db"], {"type": "http", "url": expected_url, "tools": ["*"]})
+        self.assertEqual(read(".plugin/plugin.json")["mcpServers"]["solar-system-db"], {"type": "http", "url": expected_url, "tools": ["*"]})
+        self.assertEqual(read(".codex-plugin/plugin.json")["mcpServers"], "./.mcp.json")
         self.assertEqual(tomllib.loads((self.root / "clients/codex.toml").read_text())["mcp_servers"]["solar-system-db"]["url"], expected_url)
         self.assertNotIn("extensions", read(".claude-plugin/plugin.json"))
         self.assertNotIn("$schema", read(".claude-plugin/plugin.json"))
