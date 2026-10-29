@@ -10,7 +10,10 @@ plugin repository does not serve the website or the REST API.
 | This plugin | MCP client package. Interactive use does not need a key. |
 
 Cloudflare applies its own edge limits. It exempts any request that carries
-the `X-PU-Api-Key` header, whether or not the value is a real key. The API
+the `X-PU-Api-Key` header from a stricter anonymous rule, whether or not the
+value is a real key. Cloudflare Pro still caps all traffic, keyed or not, at
+300 requests per minute per IP. The access form can store egress CIDR ranges
+so operators can allowlist a high-volume institution. The API
 therefore treats a missing, blank, unknown, or revoked key exactly like
 anonymous traffic: the per-IP anonymous limit, HTTP 429, and
 `X-PU-Key-Tier: anonymous`. Unknown and revoked keys are also rate-limited
