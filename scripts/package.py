@@ -16,7 +16,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = ("docs/clients.md", "docs/openai.md", "docs/validation.md", "docs/submission.md", "docs/listings.md")
+DOCS = ("docs/clients.md", "docs/fair-use.md", "docs/openai.md", "docs/validation.md", "docs/submission.md", "docs/listings.md")
 REGISTRY_SCHEMA = "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json"
 REGISTRY_NAME = "net.publicuniverse/publicuniverse"
 REGISTRY_DESCRIPTION = "Free astronomy catalogue: solar system objects, sky positions, close approaches and more."
