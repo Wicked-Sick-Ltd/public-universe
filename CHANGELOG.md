@@ -4,6 +4,10 @@ All notable changes to this plugin are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Fair-use note for bulk REST access: send `X-PU-Api-Key`; a missing, invalid, or revoked key stays anonymous. See [fair-use.md](docs/fair-use.md). The website and API enforcement live in `solar-system-web` and `solar-system-db`.
+
 ## 0.4.1 (2026-10-16)
 
 ### Added
