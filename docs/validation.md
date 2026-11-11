@@ -40,7 +40,17 @@ Verified locally on 2026-10-02:
 
 ## Live MCP check
 
-Package 0.4.2 advertises `https://api.publicuniverse.net/mcp`. `https://api.sol.wickedsick.com/mcp` keeps working: the two hosts serve in parallel, with no redirect. The dated checks below were run against the alias host and are unchanged.
+Package 0.4.2 advertises `https://api.publicuniverse.net/mcp`. `https://api.sol.wickedsick.com/mcp` keeps working: the two hosts serve in parallel, with no redirect. Checks dated before 2026-11-11 were run against the alias host and are unchanged.
+
+### 2026-11-11 (advertised host)
+
+From the 0.4.2 review environment, against `https://api.publicuniverse.net/mcp`:
+
+- `initialize` → HTTP 200 (`text/event-stream`), `mcp-session-id` set, protocol `2025-03-26`, `serverInfo.name` `solar-system-db` `1.30.0`. No `Location` redirect and no `cf-mitigated` header.
+- `notifications/initialized` → HTTP 202.
+- `tools/list` → 33 tools, all `readOnlyHint: true` and `destructiveHint: false`.
+
+`get_stats` and `get_object` were not repeated on this host. Those calls in the 2026-10-16 section below are the alias host. The same `initialize` on `https://api.sol.wickedsick.com/mcp` also returned HTTP 200 with no `Location` header.
 
 ### 2026-10-16 (end-to-end; supersedes earlier partial checks)
 
@@ -52,7 +62,7 @@ From this cloud agent environment:
 - `tools/call` `get_stats` → live catalogue counts (for example `total_objects` 1,578,967).
 - `tools/call` `get_object` with `name_or_designation: "Mars"` → Mars catalogue record with orbital elements.
 
-No authentication required. This satisfies marketplace review connectivity for the documented public endpoint.
+No authentication required. On that date this satisfied marketplace review connectivity for the then-documented endpoint, `https://api.sol.wickedsick.com/mcp`.
 
 ### 2026-10-11 (supersedes the 2026-10-08 result below)
 

@@ -1,6 +1,6 @@
 # Directory listing copy
 
-Draft text for public directories. **Nothing here has been submitted.** The repository is public and the live MCP check in [validation.md](validation.md) passed on 2026-10-16; submit when review copy is final.
+Draft text for public directories. **Nothing here has been submitted.** The repository is public. The 2026-10-16 live MCP check in [validation.md](validation.md) passed against `https://api.sol.wickedsick.com/mcp`; that page also records a 2026-11-11 initialize and tool list on `https://api.publicuniverse.net/mcp`. Submit when review copy is final.
 
 ## Shared facts
 

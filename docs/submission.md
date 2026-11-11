@@ -20,7 +20,7 @@ Existing users should disable/remove the old `solar` plugin before enabling `pub
 2. **Done:** `plugin.json.repository` and generated profiles point at the public repository.
 3. Pin the reviewed package commit in remote catalog listings (`ai-marketplace`) and the Gemini install command when submitting those directories.
 4. **Done in 0.4.2:** the advertised MCP URL is `https://api.publicuniverse.net/mcp` (root `mcp.json`, regenerated with `python3 scripts/package.py generate`). The alias host stays in service with no redirect. This package change does not republish directory listings; a listing that already ingested `server.json` keeps the alias URL until a later republish.
-5. Record native Cursor desktop acceptance after marketplace listing; package and live MCP checks passed on 2026-10-16.
+5. Record native Cursor desktop acceptance after marketplace listing. Package checks and the alias-host live MCP check passed on 2026-10-16; the 2026-11-11 advertised-host initialize and tool list are in [validation.md](validation.md).
 
 The generated ZIP and `.plugin` contain the same allowlisted files; neither includes Git history, credentials, development tests or unrelated local files. The icon is reused from the website's existing favicon.
 
