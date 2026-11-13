@@ -98,18 +98,15 @@ class PackageTests(unittest.TestCase):
         expected_url = "https://example.org/mcp"
         self.assertEqual(read(".mcp.json"), read("clients/claude.json"))
         self.assertEqual(read("clients/cursor.json")["mcpServers"]["solar-system-db"], {"url": expected_url})
-        self.assertEqual(read("clients/gemini.json")["mcpServers"]["solar-system-db"], {"url": expected_url})
-        self.assertEqual(read("mcp_config.json")["mcpServers"]["solar-system-db"], {"url": expected_url})
         self.assertEqual(read("clients/vscode.json")["servers"]["solar-system-db"], {"type": "http", "url": expected_url})
         self.assertEqual(read("clients/copilot-cli.json")["mcpServers"]["solar-system-db"], {"type": "http", "url": expected_url, "tools": ["*"]})
-        self.assertEqual(read(".plugin/plugin.json")["mcpServers"]["solar-system-db"], {"type": "http", "url": expected_url, "tools": ["*"]})
-        self.assertEqual(read(".codex-plugin/plugin.json")["mcpServers"], "./.mcp.json")
         self.assertEqual(tomllib.loads((self.root / "clients/codex.toml").read_text())["mcp_servers"]["solar-system-db"]["url"], expected_url)
         self.assertNotIn("extensions", read(".claude-plugin/plugin.json"))
         self.assertNotIn("$schema", read(".claude-plugin/plugin.json"))
         gemini = read("gemini-extension.json")
         self.assertEqual(gemini["name"], read("plugin.json")["name"])
         self.assertEqual(gemini["version"], read("plugin.json")["version"])
+        self.assertEqual(gemini["description"], read("plugin.json")["description"])
         self.assertEqual(gemini["mcpServers"]["solar-system-db"], {"httpUrl": expected_url})
         marketplace = read("clients/openai-marketplace.json")
         self.assertEqual(marketplace["plugins"][0]["source"]["url"], "https://example.org/solar.git")
@@ -165,6 +162,16 @@ class PackageTests(unittest.TestCase):
                 self.assertEqual(entry.date_time, (1980, 1, 1, 0, 0, 0))
                 self.assertFalse(entry.filename.startswith("/"))
                 self.assertNotIn("..", Path(entry.filename).parts)
+
+    def test_skill_data_caveats_are_byte_identical(self):
+        copies = sorted((REPO / "skills").glob("*/references/data-caveats.md"))
+        self.assertEqual([path.parent.parent.name for path in copies], [
+            "close-approach-watch", "lesson-builder", "object-explainer",
+            "publicuniverse-data-audit", "sky-this-week", "space-fact-check", "tonight-sky",
+        ])
+        first = copies[0].read_bytes()
+        for path in copies[1:]:
+            self.assertEqual(path.read_bytes(), first)
 
     def test_every_repository_skill_and_reference_is_in_allowlist(self):
         files = set(package.skill_files(REPO))

@@ -1,7 +1,5 @@
 .DS_Store
 *.plugin
-!.plugin/
-!.plugin/**
 dist/
 __pycache__/
 *.pyc
