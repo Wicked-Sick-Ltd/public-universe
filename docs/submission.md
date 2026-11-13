@@ -10,7 +10,7 @@ Release candidate: 0.4.2. The package is prepared for Cursor marketplace review,
 - Audit skill: `publicuniverse-data-audit` replaces `solar-data-audit`. The other six skill names stay the same.
 - MCP identifier: `publicuniverse` from 0.4.0 (was `solar-system-db`). Skills refer to the new identifier; tool names are unchanged.
 - MCP URL: `https://api.publicuniverse.net/mcp` (Streamable HTTP, no auth). `https://api.sol.wickedsick.com/mcp` keeps working: the two hosts serve in parallel, with no redirect. The 2026-10-16 initialize check (33 read-only tools and live `get_stats` / `get_object` calls) was recorded against the alias host; see validation.md.
-- Public catalog: `Wicked-Sick-Ltd/ai-marketplace`. Its Claude, Codex and Copilot indexes pin the plugin source revision; Gemini has an installation guide. Cursor imports the plugin source repository directly because this index does not vendor plugin directories.
+- Public catalog: `Wicked-Sick-Ltd/ai-marketplace`. Claude, Codex and Copilot indexes import this source repository and pin a commit SHA. Gemini has an installation guide with the same kind of pin. Cursor installs a vendored copy at `plugins/publicuniverse/` because its team marketplace resolves plugin sources inside the catalogue. See [listings.md](listings.md).
 
 Existing users should disable/remove the old `solar` plugin before enabling `publicuniverse`, using their client's plugin manager. Update explicit `/solar:…` invocations to `/publicuniverse:…` on Claude and any copied audit-skill directory after comparing local edits. Do not install both a full plugin and its standalone MCP profile, or overwrite unrelated client configuration.
 
