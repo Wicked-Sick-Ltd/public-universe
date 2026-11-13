@@ -8,6 +8,10 @@ All notable changes to this plugin are documented here.
 
 - Fair-use note for bulk REST access: send `X-PU-Api-Key`; a missing, invalid, or revoked key stays anonymous. Cloudflare Pro still caps every IP, keyed or not, at 300 requests per minute. See [fair-use.md](docs/fair-use.md). The website and API enforcement live in `solar-system-web` and `solar-system-db`.
 
+### Changed
+
+- Stop generating `.codex-plugin/plugin.json`, `.plugin/plugin.json`, `mcp_config.json`, and `clients/gemini.json`; add the plugin description to `gemini-extension.json`.
+
 ## 0.4.2 (2026-11-11)
 
 ### Changed

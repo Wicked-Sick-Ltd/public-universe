@@ -1,6 +1,7 @@
 {
   "name": "publicuniverse",
   "version": "0.4.2",
+  "description": "Public Universe astronomy tools and skills: explore catalogue data, plan stargazing, explain objects, build lessons and check space facts using a free public MCP server.",
   "mcpServers": {
     "publicuniverse": {
       "httpUrl": "https://api.publicuniverse.net/mcp"
