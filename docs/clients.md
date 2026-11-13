@@ -93,7 +93,7 @@ gemini extensions list
 gemini skills list
 ```
 
-Review the installation prompt, restart Gemini and check that PublicUniverse and all seven skills appear. Repository installs use `gemini extensions install https://github.com/Wicked-Sick-Ltd/public-universe --ref <reviewed-tag-or-sha>` once the repository is public. The pinned command belongs in the existing `ai-marketplace/gemini/README.md`; Gemini does not use a marketplace JSON catalog.
+Review the installation prompt, restart Gemini and check that PublicUniverse and all seven skills appear. Repository installs use `gemini extensions install https://github.com/Wicked-Sick-Ltd/public-universe --ref <reviewed-tag-or-sha>`. The pinned command belongs in the existing `ai-marketplace/gemini/README.md`; Gemini does not use a marketplace JSON catalog.
 
 The tested Windows runtime is Gemini CLI 0.62.0 with Node 24.21.0. Node 25.6.1 produced a shutdown assertion after installation; repeat with Node 24 if you encounter that client error.
 

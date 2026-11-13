@@ -44,10 +44,13 @@ First public release as **Public Universe** (`publicuniverse`). It also ships th
 - Repository metadata now points at `Wicked-Sick-Ltd/publicuniverse-plugin` (#3).
 
 ### Known limitations
-- The repository has **not** been renamed yet: it is still `Wicked-Sick-Ltd/solar-plugin`, so install commands and links that use `publicuniverse-plugin` return 404 until the rename happens. #3 asked for the rename before merge.
-- The remote MCP endpoint (`https://api.sol.wickedsick.com/mcp`) still returns 404 from the API origin, so live tool calls do not work yet. Skills install and load. The 8 October check showed the 404 comes from the origin, not the Cloudflare WAF (#3).
-- `https://api.publicuniverse.net/mcp` is planned but not live; the package keeps the current URL until it is.
-- The repository is internal, so public install routes need it to be made public first.
+
+Resolved by 0.4.2:
+
+- The repository is `Wicked-Sick-Ltd/public-universe` and is public. GitHub redirects `solar-plugin`. At 0.4.0 it was still `Wicked-Sick-Ltd/solar-plugin`, so links that used `publicuniverse-plugin` returned 404.
+- `https://api.sol.wickedsick.com/mcp` initializes (HTTP 200, 33 read-only tools, `serverInfo.name` `solar-system-db` 1.30.0). At 0.4.0 the origin still returned 404. See [validation.md](docs/validation.md).
+- `https://api.publicuniverse.net/mcp` is the advertised URL and accepted `initialize` on 2026-11-11. At 0.4.0 it was planned and not live.
+- The repository is public, so install routes no longer wait on an internal repository.
 
 ## 0.3.0 (unreleased)
 - Rename the package to `publicuniverse` and the audit skill to `publicuniverse-data-audit`.

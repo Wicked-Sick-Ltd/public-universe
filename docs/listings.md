@@ -65,4 +65,10 @@ The gallery indexes public GitHub repositories that contain `gemini-extension.js
 
 ## 7. Wicked Sick catalogue (`Wicked-Sick-Ltd/ai-marketplace`)
 
-Update the Claude, Codex and Copilot entries to the renamed repository and the merged 0.4.0 commit SHA, refresh the Gemini command, and add the Cursor entry (a vendored copy of this package at `plugins/publicuniverse/`, because Cursor team marketplaces resolve sources inside the catalogue repository).
+Checked read-only on catalogue `main`. This package does not edit that repository.
+
+Cursor's team marketplace (`.cursor-plugin/marketplace.json`) sets `publicuniverse` `source` to `plugins/publicuniverse`. That path is a vendored copy of this package. `plugins/publicuniverse/VENDORED.md` records version 0.4.2 taken from commit `8b1e7b348067194d5a400f6bf16a0144a51d74aa` (the head of pull request 9). The squash merge on this repository's `main` is `f660a494163def6b3d9e4427eebcf9cf1190f052`; both commits have tree `a87cf8ed72e431e692df03732e43014c1fe8f4ea`. Cursor does not import this source repository by URL.
+
+Claude (`.claude-plugin/marketplace.json`), Codex (`.agents/plugins/marketplace.json`) and Copilot (`.github/plugin/marketplace.json`) import `https://github.com/Wicked-Sick-Ltd/public-universe.git` and pin commit `bb5919e47e8c8e1eb66c2fc5dcdba9bbc51b2f56`, labelled 0.4.1. They do not install the vendored `plugins/publicuniverse/` tree. Gemini (`gemini/README.md`) is an install guide, not a JSON catalog, and pins the same commit.
+
+Pin those git imports and the Gemini `--ref` to the reviewed release commit. This repository has no release tag. The 0.4.2 commit on `main` is `f660a494163def6b3d9e4427eebcf9cf1190f052`.

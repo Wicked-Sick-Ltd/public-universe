@@ -1,6 +1,8 @@
 # Multi-vendor validation
 
-Development acceptance record, updated 2026-10-05 for PublicUniverse 0.3.0. Package checks and live service checks are separate.
+Development acceptance record for Public Universe 0.4.2. Package checks and live service checks are separate.
+
+At 0.4.2, `python3 scripts/package.py check` validates 46 allowlisted files on `main` (`f660a494163def6b3d9e4427eebcf9cf1190f052`). Open pull request #10 removes unused manifests and will lower that count; this page does not state a post-#10 number. The compatibility table below is the 2026-10-05 run for package 0.3.0, including that run's 35-file package check.
 
 ## PublicUniverse compatibility results (2026-10-05)
 
@@ -14,7 +16,7 @@ The ZIP was extracted into a temporary marketplace and installed into isolated c
 | GitHub Copilot CLI 1.0.91 | Installed the archive with seven skills; `plugin list` and `skill list` confirmed version 0.3.0 and every workflow. | Live tools and VS Code UI acceptance. Direct installs are deprecated by this CLI; prefer the marketplace entry for distribution. |
 | Cursor | Root manifests pass the official Agent Plugins 1.0.0 schemas, the format documented by Cursor for skills and MCP. | No Cursor executable available on this machine: desktop discovery and live execution remain unverified. |
 
-Offline package validation passed for all 35 allowlisted files. The 19-test suite passed on Windows with four symlink cases skipped because this account lacks symlink privilege; Linux CI runs those security checks. Both distributable archives build. The root portable manifest carries OpenAI metadata, so a duplicate `.codex-plugin` manifest is unnecessary.
+On that 2026-10-05 run, offline package validation passed for all 35 allowlisted files. The 19-test suite passed on Windows with four symlink cases skipped because this account lacks symlink privilege; Linux CI runs those security checks. Both distributable archives build. The root portable manifest carries OpenAI metadata, so a duplicate `.codex-plugin` manifest is unnecessary.
 
 The canonical website returned HTTP 200. MCP initialization returned HTTP 404 at that time; see the live MCP section below for current status. These results establish package compatibility, not public-directory approval or full end-to-end support.
 
@@ -68,21 +70,11 @@ No authentication required. On that date this satisfied marketplace review conne
 
 `POST https://api.sol.wickedsick.com/mcp` `initialize` returned HTTP 200 (`text/event-stream`) with an `mcp-session-id`, protocol `2025-03-26` and serverInfo `solar-system-db` 1.30.0. `notifications/initialized` returned 202 and `tools/list` returned 33 tools, all annotated `readOnlyHint: true`, `destructiveHint: false`. No authentication is required; `/.well-known/oauth-protected-resource` returns 404 (expected for an unauthenticated server). Tool calls and client acceptance scenarios were not run in this check. Note the server still reports its name as `solar-system-db`, not `publicuniverse`.
 
-### 2026-10-08 (supersedes the WAF diagnosis below)
+### 2026-10-08 and 2026-10-02
 
-`POST https://api.sol.wickedsick.com/mcp` with a JSON-RPC `initialize` body returned HTTP 404 `{"detail":"Not Found"}` for browser, curl, AI-agent and MCP-client user agents. Response headers carried no `cf-mitigated` header and no challenge page. Cloudflare analytics for the same requests show the edge passing them to the origin (the zone's "Solar API + MCP" skip rule matched) and the origin itself answering 404. The REST API on the same host (`/healthz`, `/openapi.json`, `/api/v1/stats`, `/api/v1/objects/planet-mars`) returned 200 with live data to every user agent tested. So the MCP failure is origin routing, not the Cloudflare WAF: the `/mcp` path reaches the REST application, which has no such route. Deploying the MCP service and proxy location from `solar-system-db` (`deploy/php01/MCP-ROLLOUT.md`, merged in backend PR #47) is the remaining step.
+On 2026-10-08 and 2026-10-02, `POST https://api.sol.wickedsick.com/mcp` returned HTTP 404 from the origin. The 2026-10-11, 2026-10-16 and 2026-11-11 initialize results above supersede those checks.
 
-One edge rule does affect API clients: Browser Integrity Check returns Cloudflare error 1010 (HTTP 403) to the default `Python-urllib/*` user agent on the API and website hosts. Other script user agents (`python-requests`, `Go-http-client`, `node`, `axios`, curl, MCP clients) are allowed.
-
-### Earlier record
-
-The existing public endpoint `https://api.sol.wickedsick.com/mcp` returned HTTP 404 with `{"detail":"Not Found"}` on 2026-10-02 at approximately 21:25 UTC. A Python MCP SDK initialization also failed with `Session terminated`. No tool invocation completed. This is an outstanding service acceptance issue, not a successful connection test.
-
-The trailing-slash `/mcp/` also returned 404, while `/healthz` and `/openapi.json` served the REST API successfully. The backend's checked-in php01 systemd unit launches the REST API alone; its separate Docker/Caddy example routes MCP to a different service on port 8002. Those repository templates did not establish the deployed configuration or explain the public response. On 2026-10-03 the issue was attributed to Cloudflare WAF rules; the 2026-10-08 check above found the edge passing requests through and the origin answering 404, which restores the origin-routing explanation. That record kept the documented URL on the alias until the replacement host was confirmed. Package 0.4.2 advertises `https://api.publicuniverse.net/mcp`. `https://api.sol.wickedsick.com/mcp` keeps working: the two hosts serve in parallel, with no redirect.
-
-[Backend PR #47](https://github.com/Wicked-Sick-Ltd/solar-system-db/pull/47) includes transport metadata/security improvements and optional origin service/proxy templates. It is not a required remedy for the WAF issue. Do not install or replace a service based on the 404 alone: check the existing origin after resolving the edge configuration, and use those templates only if a remaining origin gap is established. No WAF or origin changes are part of the current plugin work.
-
-Repeat a bounded initialization check after the endpoint has been restored:
+Repeat a bounded initialization check:
 
 ```sh
 curl --max-time 20 -i https://api.publicuniverse.net/mcp \

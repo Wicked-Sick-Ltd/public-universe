@@ -21,7 +21,7 @@ Copy each desired **whole directory** from `skills/` into your project's `.agent
 
 Current Codex supports root `plugin.json`, `mcp.json` and `skills/`. The [OpenAI package guide](https://developers.openai.com/plugins/build/plugins) describes local and Git-backed marketplaces.
 
-The public catalog is [Wicked-Sick-Ltd/ai-marketplace](https://github.com/Wicked-Sick-Ltd/ai-marketplace). Once its PublicUniverse entry is merged and the source repository is public:
+The public catalog is [Wicked-Sick-Ltd/ai-marketplace](https://github.com/Wicked-Sick-Ltd/ai-marketplace). Its Public Universe entry is in the published Codex index:
 
 ```sh
 codex plugin marketplace add Wicked-Sick-Ltd/ai-marketplace --sparse .agents/plugins
