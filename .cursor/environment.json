@@ -1,0 +1,4 @@
+{
+  "name": "Public Universe",
+  "install": "bash .cursor/install.sh"
+}
