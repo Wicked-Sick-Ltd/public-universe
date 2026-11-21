@@ -54,4 +54,4 @@ From the repository root, after install:
 - `.venv/bin/python scripts/package.py --help`
 - `git diff --check`
 
-Install, packaging, and the test suite stay offline. They do not read API keys or database URLs, and they do not call the remote MCP endpoint.
+Packaging and the test suite stay offline. They do not read API keys or database URLs, and they do not call the remote MCP endpoint. The installer does not read API keys or database URLs, and it does not call the remote MCP endpoint. Creating `.venv` is offline when `ensurepip` is already present. When `ensurepip` is missing, `.cursor/install.sh` runs `apt-get update` and installs the matching `python3-venv` packages from the package mirror.
